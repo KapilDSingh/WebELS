@@ -1,0 +1,1 @@
+﻿{"ContextClassName":"ISODBContext","DefaultDacpacSchema":null,"IdReplace":false,"IncludeConnectionString":true,"OutputPath":"Model","ProjectRootNamespace":"WebELS","SelectedToBeGenerated":0,"Tables":["lmpTbl","loadTbl"],"UseDatabaseNames":true,"UseFluentApiOnly":false,"UseHandleBars":false,"UseInflector":false}
