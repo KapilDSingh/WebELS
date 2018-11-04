@@ -42,6 +42,7 @@ import { ViewDataComponent } from './view-data/view-data.component';
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'ELSChart', component: MainComponent },
       { path: 'iso-data', component: IsoChartsComponent },
+      { path: 'view-data', component: ViewDataComponent },
 
     ]),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })

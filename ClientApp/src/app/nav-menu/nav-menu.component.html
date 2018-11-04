@@ -39,6 +39,12 @@
                 <span class='glyphicon glyphicon-th-list'></span> ISO PJM Data
               </a>
             </li>
+            <li [routerLinkActive]='["link-active"]'>
+              <a [routerLink]='["/view-data"]' (click)='collapse()'>
+                <span class='glyphicon glyphicon-th-list'></span> View Data
+              </a>
+            </li>
+
 
           </ul>
         </div>
