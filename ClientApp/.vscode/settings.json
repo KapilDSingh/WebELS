@@ -9,5 +9,6 @@
         "**/.hg": false,
         "**/.svn": false,
         "**/CVS": false
-    }
+    },
+    "git.ignoreLimitWarning": true
 }

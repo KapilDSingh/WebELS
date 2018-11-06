@@ -18,6 +18,7 @@ import { Tab } from '../Models/tab.model';
 })
 export class IsoChartsComponent {
   data: Array<LMP>;
+  title: string;
   canSendMessage: boolean;
   tabs: Tab[];
    charts: Array<{

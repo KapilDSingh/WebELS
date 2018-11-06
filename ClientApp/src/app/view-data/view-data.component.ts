@@ -22,24 +22,7 @@ export class ViewDataComponent implements OnInit {
     options?: {}
   }> = [];
 
-  changingChart = {
-    title: 'Changing Chart',
-    type: 'BarChart',
-    data: [
-      ['Copper', 8.94],
-      ['Silver', 10.49],
-      ['Gold', 19.30],
-      ['Platinum', 21.45],
-    ],
-    columnNames: ['Element', 'Density'],
-    options: {
-      animation: {
-        duration: 250,
-        easing: 'ease-in-out',
-        startup: true
-      }
-    }
-  };
+  
 
   @ViewChild('chart')
   chart: GoogleChartComponent;
@@ -47,32 +30,6 @@ export class ViewDataComponent implements OnInit {
   constructor(
     private router: Router
   ) {
-    this.charts.push({
-      title: 'Pie Chart',
-      type: 'PieChart',
-      columnNames: ['Task', 'Hours per Day'],
-      data: [
-        ['Work',     11],
-        ['Eat',      2],
-        ['Commute',  2],
-        ['Watch TV', 2],
-        ['Sleep',    7]
-      ],
-      roles: []
-    });
-
-    this.charts.push({
-      title: 'Bar Chart',
-      type: 'BarChart',
-      columnNames: ['Element', 'Density'],
-      roles: [{ role: 'style', type: 'string' }],
-      data: [
-        ['Copper', 8.94, '#b87333'],
-        ['Silver', 10.49, 'silver'],
-        ['Gold', 19.30, 'gold'],
-        ['Platinum', 21.45, 'color: #e5e4e2' ],
-      ]
-    });
 
     this.charts.push({
       title: 'Styled Line Chart',
@@ -252,14 +209,7 @@ export class ViewDataComponent implements OnInit {
   ngOnInit() {
     console.log(this.chart);
   }
-  changeChart() {
-    this.changingChart.data = [
-      ['Copper', Math.random() * 20.0],
-      ['Silver', Math.random() * 20.0],
-      ['Gold', Math.random() * 20.0],
-      ['Platinum', Math.random() * 20.0],
-    ];
-  }
+
 
   navigateToTest() {
     this.router.navigateByUrl('/test');
