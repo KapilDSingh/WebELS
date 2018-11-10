@@ -17,7 +17,9 @@ import { Tab } from '../Models/tab.model';
   styles: [':host > *:not(h1) { display: inline-block !important; }'],
 })
 export class IsoChartsComponent {
-  data: Array<LMP>;
+  lmpData: Array<LMP>;
+  chartType: string;
+  StringToChild = 'THIS IS A STRING TO CHILD';
   title: string;
   canSendMessage: boolean;
   tabs: Tab[];
@@ -32,7 +34,7 @@ export class IsoChartsComponent {
     private _ngZone: NgZone
   ) {
     this.subscribeToEvents();
-    this.data = new Array<LMP>();
+    this.lmpData = new Array<LMP>();
     this.tabs = [];
     this.tabs.push(new Tab('Lobby', 'Welcome to lobby'));
     this.tabs.push(new Tab('SignalR', 'Welcome to SignalR Room'));
@@ -54,7 +56,8 @@ export class IsoChartsComponent {
 
     this.signalrService.messageReceived.subscribe((data: any) => {
       this._ngZone.run(() => {
-        this.data = data;
+        this.lmpData = data;
+        this.chartType = 'AreaChart';
       });
     });
   }

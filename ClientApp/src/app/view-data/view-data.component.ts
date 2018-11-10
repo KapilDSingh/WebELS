@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnChanges } from '@angular/core';
 import { ChartErrorEvent, ChartEvent, GoogleChartComponent } from '../../../projects/angular-google-charts/src/public_api';
 
 import { Router } from '@angular/router';
@@ -11,8 +11,13 @@ import { LMP } from '../Models/IsoModels';
   styleUrls: ['./view-data.component.css'],
   styles: [':host > *:not(h1) { display: inline-block !important; }']
 })
-export class ViewDataComponent implements OnInit {
+export class ViewDataComponent implements OnInit, OnChanges {
+  @Input() StringToChild: string;
+  @Input() lmpData: Array<LMP>;
+  @Input() chartType: string;
 
+
+chartData: Array<Array<string | number | {}>>;
   charts: Array<{
     title: string,
     type: string,
@@ -30,7 +35,7 @@ export class ViewDataComponent implements OnInit {
   constructor(
     private router: Router
   ) {
-
+    
     this.charts.push({
       title: 'Styled Line Chart',
       type: 'LineChart',
@@ -70,18 +75,7 @@ export class ViewDataComponent implements OnInit {
       }
     });
 
-    this.charts.push({
-      title: 'Area Chart',
-      type: 'AreaChart',
-      columnNames: ['Year', 'Sales', 'Expenses'],
-      data: [
-        ['2013', 1000, 400],
-        ['2014', 1170, 460],
-        ['2015', 660, 1120],
-        ['2016', 1030, 540]
-      ],
-      roles: []
-    });
+    this.newMethod();
 
     this.charts.push({
       title: 'Bubble Chart',
@@ -186,6 +180,22 @@ export class ViewDataComponent implements OnInit {
     });
   }
 
+  private newMethod() {
+    this.charts.push({
+      title: 'Area Chart',
+      type: 'AreaChart',
+      columnNames: ['Year', 'Sales', 'Expenses'],
+      data: [
+        ['2014', 1000, 400],
+        ['2015', 1170, 460],
+        ['2016', 660, 1120],
+        ['2017', 1030, 540]
+      ],
+
+      roles: []
+    });
+  }
+
   onReady() {
     console.log('Chart ready');
   }
@@ -207,9 +217,13 @@ export class ViewDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.StringToChild);
+    console.log(this.lmpData);
+    console.log(this.chartType);
+  }
+  ngOnChanges() {
     console.log(this.chart);
   }
-
 
   navigateToTest() {
     this.router.navigateByUrl('/test');

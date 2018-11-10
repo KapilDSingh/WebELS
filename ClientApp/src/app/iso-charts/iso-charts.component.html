@@ -1,6 +1,12 @@
-<h1 style="font-family: Arial, Helvetica, sans-serif">Smart Grid Innovations</h1>
+<h1 style="font-family: Arial, Helvetica, sans-serif">{{ StringToChild }} Smart Grid Innovations</h1>
 <div class="container">
     <div class="row">
-      <app-view-data></app-view-data>
+      <app-view-data
+     
+        [lmpData] = "lmpData"
+        [chartType]= "chartType"
+        [StringToChild] = "StringToChild"> </app-view-data>
+     
+
     </div>
   </div>
