@@ -8,9 +8,9 @@ export class LMP {
 
   public Type: string;
 
-  public FiveMinuteWgtedAvgLMP: number;
+  public fiveMinuteAvgLMP: number;
 
-  public HourlyIntegratedLMP: number;
+  public hourlyIntegratedLMP: number;
 
   public node_id: string;
 

@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class SignalrISOdataService implements OnInit {
-  messageReceived = new EventEmitter<Array<LMP>>();
+  LMPmessageReceived = new EventEmitter<Array<LMP>>();
   connectionEstablished = new EventEmitter<Boolean>();
 
   public connectionIsEstablished = false;
@@ -43,7 +43,7 @@ export class SignalrISOdataService implements OnInit {
 
   private registerOnServerEvents(): void {
     this._hubConnection.on('ReceiveLMP', (data: any) => {
-      this.messageReceived.emit(data);
+      this.LMPmessageReceived.emit(data);
     });
   }
   ngOnInit(): void {

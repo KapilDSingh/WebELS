@@ -19,6 +19,7 @@ using TableDependency.SqlClient.Base;
 using System.Linq.Expressions;
 using TableDependency.SqlClient.Base.Abstracts;
 using TableDependency.SqlClient.Where;
+using System.Collections.Generic;
 
 namespace WebELS.SqlTableDependencies
 {
@@ -69,8 +70,11 @@ namespace WebELS.SqlTableDependencies
         {
             if (e.ChangeType != ChangeType.None)
             {
-                _LMPrepository.LMPdata = _LMPrepository.GetLMP(1);
-                _hubContext.Clients.All.SendAsync("ReceiveLMP", e.Entity);
+                List<lmpTbl> data = new List<lmpTbl>();
+
+                data.Add(e.Entity);
+                // _LMPrepository.LMPdata = _LMPrepository.GetLMP(1);
+                _hubContext.Clients.All.SendAsync("ReceiveLMP", data);
 
             }
         }

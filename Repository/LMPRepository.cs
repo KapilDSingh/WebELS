@@ -31,10 +31,9 @@ namespace WebELS.Repository
         {
             using (var context = _contextFactory.Invoke())
             {
-                // Query for all blogs with names starting with B
                 LMPdata = (from x in context.lmpTbl where x.node_id == "PSEG"  && x.Type == "ZONE" orderby x.timestamp descending select x).Take(n).ToList();
 
-
+               
                 return LMPdata;
 
             }

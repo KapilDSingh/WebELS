@@ -1,9 +1,10 @@
 
-import { Component, OnInit, ViewChild, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ChartErrorEvent, ChartEvent, GoogleChartComponent } from '../../../projects/angular-google-charts/src/public_api';
 
 import { Router } from '@angular/router';
 import { LMP } from '../Models/IsoModels';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-view-data',
@@ -17,25 +18,26 @@ export class ViewDataComponent implements OnInit, OnChanges {
   @Input() chartType: string;
 
 
-chartData: Array<Array<string | number | {}>>;
+
+
   charts: Array<{
     title: string,
     type: string,
-    data: Array<Array<string | number | {}>>,
+    data: Array<Array<Date | number | string | {}>>,
     roles: Array<{type: string, role: string}>,
     columnNames?: Array<string>,
     options?: {}
   }> = [];
-
-  
+  changeLog: any;
 
   @ViewChild('chart')
   chart: GoogleChartComponent;
 
+
   constructor(
     private router: Router
   ) {
-    
+
     this.charts.push({
       title: 'Styled Line Chart',
       type: 'LineChart',
@@ -75,7 +77,7 @@ chartData: Array<Array<string | number | {}>>;
       }
     });
 
-    this.newMethod();
+
 
     this.charts.push({
       title: 'Bubble Chart',
@@ -180,21 +182,28 @@ chartData: Array<Array<string | number | {}>>;
     });
   }
 
-  private newMethod() {
+  public drawLMPChart() {
+
+     var chartData: Array<Array<Date | number | string  >> = new Array<Array<Date | number | string  >>();
+
+    for (let i = 0; i < this.lmpData.length; i++) {
+       const lmpDate = new Date(this.lmpData[i].timestamp);
+       let dataPoint: Array<Date | number | string> = new Array<Date | number | string>();
+
+       dataPoint.push(lmpDate, this.lmpData[i].fiveMinuteAvgLMP,
+        this.lmpData[i].hourlyIntegratedLMP);
+       chartData.push(dataPoint);
+    }
+    this.charts.length = 0;
     this.charts.push({
-      title: 'Area Chart',
+      title: this.StringToChild,
       type: 'AreaChart',
-      columnNames: ['Year', 'Sales', 'Expenses'],
-      data: [
-        ['2014', 1000, 400],
-        ['2015', 1170, 460],
-        ['2016', 660, 1120],
-        ['2017', 1030, 540]
-      ],
+      columnNames: ['Time', '5 Minute Avg. LMP', 'Hourly Integrated LMP'],
+      data: chartData,
 
       roles: []
     });
-  }
+    }
 
   onReady() {
     console.log('Chart ready');
@@ -217,12 +226,17 @@ chartData: Array<Array<string | number | {}>>;
   }
 
   ngOnInit() {
-    console.log(this.StringToChild);
-    console.log(this.lmpData);
-    console.log(this.chartType);
+
   }
-  ngOnChanges() {
-    console.log(this.chart);
+  
+  ngOnChanges(changes: SimpleChanges) {
+    this.drawLMPChart();
+    for (let propName in changes) {
+      let chng = changes[propName];
+      let cur  = JSON.stringify(chng.currentValue);
+      let prev = JSON.stringify(chng.previousValue);
+      
+    }
   }
 
   navigateToTest() {

@@ -13,12 +13,11 @@ namespace WebELS.Models
         [Required]
         [StringLength(50)]
         public string Type { get; set; }
-
-        [JsonProperty("_5_Minute_Weighted_Avg__LMP")]
+        [JsonProperty("fiveMinuteAvgLMP")]
         [Column("5 Minute Weighted Avg. LMP")]
         public double _5_Minute_Weighted_Avg__LMP { get; set; }
 
-        [JsonProperty("Hourly_Integrated_LMP")]
+        [JsonProperty("hourlyIntegratedLMP")]
         [Column("Hourly Integrated LMP")]
         public double Hourly_Integrated_LMP { get; set; }
 

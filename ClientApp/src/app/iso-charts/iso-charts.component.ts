@@ -18,8 +18,7 @@ import { Tab } from '../Models/tab.model';
 })
 export class IsoChartsComponent {
   lmpData: Array<LMP>;
-  chartType: string;
-  StringToChild = 'THIS IS A STRING TO CHILD';
+  StringToChild: string;
   title: string;
   canSendMessage: boolean;
   tabs: Tab[];
@@ -54,11 +53,17 @@ export class IsoChartsComponent {
       this.sendLMPData(20);
     });
 
-    this.signalrService.messageReceived.subscribe((data: any) => {
+    this.signalrService.LMPmessageReceived.subscribe((data: any) => {
       this._ngZone.run(() => {
-        this.lmpData = data;
-        this.chartType = 'AreaChart';
-      });
+        if (data.length === 1) {
+          this.lmpData.shift();
+          this.lmpData.push(data[0]);
+          this.StringToChild = 'LMP Data as of ' + this.lmpData[this.lmpData.length - 1].timestamp;
+        } else {
+          this.lmpData = data.reverse();
+        }
+
+       });
     });
   }
 }
