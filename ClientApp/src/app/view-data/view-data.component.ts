@@ -14,7 +14,7 @@ import { DatePipe } from '@angular/common';
 })
 export class ViewDataComponent implements OnInit, OnChanges {
   @Input() StringToChild: string;
-  @Input() lmpData: Array<LMP>;
+  @Input() lmpData: Array<Array<Date | number | string>>;
   @Input() chartType: string;
 
 
@@ -184,22 +184,12 @@ export class ViewDataComponent implements OnInit, OnChanges {
 
   public drawLMPChart() {
 
-     var chartData: Array<Array<Date | number | string  >> = new Array<Array<Date | number | string  >>();
-
-    for (let i = 0; i < this.lmpData.length; i++) {
-       const lmpDate = new Date(this.lmpData[i].timestamp);
-       let dataPoint: Array<Date | number | string> = new Array<Date | number | string>();
-
-       dataPoint.push(lmpDate, this.lmpData[i].fiveMinuteAvgLMP,
-        this.lmpData[i].hourlyIntegratedLMP);
-       chartData.push(dataPoint);
-    }
-    this.charts.length = 0;
+     this.charts.length = 0;
     this.charts.push({
       title: this.StringToChild,
       type: 'AreaChart',
       columnNames: ['Time', '5 Minute Avg. LMP', 'Hourly Integrated LMP'],
-      data: chartData,
+      data: this.lmpData,
 
       roles: []
     });
