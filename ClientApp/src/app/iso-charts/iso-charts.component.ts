@@ -28,6 +28,8 @@ export class IsoChartsComponent {
     // data: Array<Array<Date | number | {}>>,
   }> = [];
 
+  chartType = 'LMP';
+
   constructor(private router: Router,
     private signalrService: SignalrISOdataService,
     private _ngZone: NgZone
