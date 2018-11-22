@@ -66,7 +66,7 @@ export class IsoChartsComponent {
           const dataPoint = this.processChartData(data[0]);
           this.lmpData.shift();
           this.lmpData.push(dataPoint);
-          this.StringToChild = this.StringToChild + dataPoint[0].toString();
+          this.StringToChild = dataPoint[0].toString();
         } else {
 
           for (let i = 0; i < data.length; i++) {
@@ -74,7 +74,7 @@ export class IsoChartsComponent {
             this.lmpData.push(dataPoint);
           }
           this.lmpData = this.lmpData.reverse();
-          this.StringToChild = this.StringToChild + this.lmpData[this.lmpData.length - 1][0].toString();
+          this.StringToChild = this.lmpData[this.lmpData.length - 1][0].toString();
         }
 
       });
