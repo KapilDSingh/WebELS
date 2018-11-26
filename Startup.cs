@@ -41,7 +41,6 @@ namespace WebELS
 
             // dependency injection
             services.AddDbContextFactory<ISODBContext>(ConnectionString);
-            services.AddSingleton<IGaugeRepository, GaugeRepository>();
             services.AddSingleton<ILMPRepository, LMPRepository>();
             services.AddSingleton<IISODBSubscription, ISODBSubscription>();
         }

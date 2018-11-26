@@ -17,7 +17,7 @@ import { IsoChartsComponent } from './iso-charts/iso-charts.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ViewDataComponent } from './view-data/view-data.component';
-import { GaugesChartComponent } from './gauge-chart/gaugeschart.component';
+
 
 
 @NgModule({
@@ -30,7 +30,7 @@ import { GaugesChartComponent } from './gauge-chart/gaugeschart.component';
     MainComponent,
     IsoChartsComponent,
     ViewDataComponent,
-    GaugesChartComponent
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -44,7 +44,7 @@ import { GaugesChartComponent } from './gauge-chart/gaugeschart.component';
       { path: 'ELSChart', component: MainComponent },
       { path: 'iso-data', component: IsoChartsComponent },
       { path: 'view-data', component: ViewDataComponent },
-      { path: 'app-gauge-chart', component: GaugesChartComponent },
+
     ]),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
