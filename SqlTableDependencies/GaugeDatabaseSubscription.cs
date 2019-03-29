@@ -33,7 +33,7 @@ namespace WebELS.SqlTableDependencies
         public void Configure(string connectionString)
         {
             
-            _tableDependency = new SqlTableDependency<lmpTbl>(connectionString);
+            _tableDependency = new SqlTableDependency<lmpTbl>(connectionString, executeUserPermissionCheck : false);
             _tableDependency.OnChanged += Changed;
             _tableDependency.OnError += TableDependency_OnError;
             _tableDependency.Start();
