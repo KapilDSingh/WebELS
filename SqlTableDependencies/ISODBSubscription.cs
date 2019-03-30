@@ -52,7 +52,7 @@ namespace WebELS.SqlTableDependencies
 
 
             _LMPtableDependency = new SqlTableDependency<lmpTbl>(ConnectionString,
-                filter: whereCondition);
+                filter: whereCondition, executeUserPermissionCheck:false);
                 _LMPtableDependency.OnChanged += Changed;
                 _LMPtableDependency.OnError += TableDependency_OnError;
                 _LMPtableDependency.Start();
