@@ -25,7 +25,7 @@ namespace WebELS.EF
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Data Source=KAPILDELLSSD\SQLEXPRESS;Initial Catalog=ISODB;Persist Security Info=True;User ID=Kapil;Password=acfjo123;");
+                optionsBuilder.UseSqlServer(@"Data Source=tcp:100.25.120.167\EC2AMAZ-I2S81GT,1433;Initial Catalog=ISODB;User ID=KapilSingh;Password=Acfjo12#;");
             }
         }
 
