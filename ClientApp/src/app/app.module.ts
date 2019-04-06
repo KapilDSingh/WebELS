@@ -17,6 +17,9 @@ import { IsoChartsComponent } from './iso-charts/iso-charts.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ViewDataComponent } from './view-data/view-data.component';
+import { MeterDataComponent } from './meter-data/meter-data.component';
+import { DigitalClockComponent } from './digital-clock/digital-clock.component';
+import { UtilService } from './shared/services/util/util.service';
 
 
 
@@ -30,6 +33,8 @@ import { ViewDataComponent } from './view-data/view-data.component';
     MainComponent,
     IsoChartsComponent,
     ViewDataComponent,
+    DigitalClockComponent,
+    MeterDataComponent,
 
   ],
   imports: [
@@ -44,11 +49,13 @@ import { ViewDataComponent } from './view-data/view-data.component';
       { path: 'ELSChart', component: MainComponent },
       { path: 'iso-data', component: IsoChartsComponent },
       { path: 'view-data', component: ViewDataComponent },
+      { path: 'meter-data', component: MeterDataComponent },
+      { path: 'digital-clock', component: DigitalClockComponent },
 
     ]),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [SignalrISOdataService],
+  providers: [SignalrISOdataService,UtilService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

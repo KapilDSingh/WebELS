@@ -7,7 +7,7 @@ import { LMP } from '../Models/IsoModels';
 
 import { SignalrISOdataService } from '../services/signalr-ISOdata.service';
 
-import { Tab } from '../Models/tab.model';
+
 
 
 @Component({
@@ -21,7 +21,7 @@ export class IsoChartsComponent {
   StringToChild: string;
   title: string;
   canSendMessage: boolean;
-  tabs: Tab[];
+ 
   charts: Array<{
     title: string,
     type: string,
@@ -36,10 +36,7 @@ export class IsoChartsComponent {
   ) {
     this.subscribeToEvents();
     this.lmpData = new Array<Array<Date | number | string>>();
-    this.tabs = [];
-    this.tabs.push(new Tab('Lobby', 'Welcome to lobby'));
-    this.tabs.push(new Tab('SignalR', 'Welcome to SignalR Room'));
-
+   
   }
 
   sendLMPData(n) {

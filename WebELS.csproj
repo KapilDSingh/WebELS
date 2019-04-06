@@ -41,6 +41,7 @@
     <None Remove="ClientApp\dist\vendor.js" />
     <None Remove="ClientApp\dist\vendor.js.map" />
     <None Remove="ClientApp\dist\vendor.js.map" />
+    <None Remove="MeterDataQuery.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -78,6 +79,10 @@
 
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="MeterDataQuery.ts" />
   </ItemGroup>
 
   <ItemGroup>
