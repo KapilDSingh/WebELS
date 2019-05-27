@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { ChartErrorEvent, ChartEvent, GoogleChartComponent } from '../../../projects/angular-google-charts/src/public_api';
 
 import { Router } from '@angular/router';
@@ -16,7 +16,7 @@ import { SignalrISOdataService } from '../services/signalr-ISOdata.service';
   styleUrls: ['./iso-charts.component.css'],
   styles: [':host > *:not(h1) { display: inline-block !important; }'],
 })
-export class IsoChartsComponent {
+export class IsoChartsComponent implements OnChanges{
   lmpData: Array<Array<Date | number | string>>;
   StringToChild: string;
   title: string;
@@ -79,4 +79,14 @@ export class IsoChartsComponent {
       });
     });
   }
+
+ngOnChanges(changes: SimpleChanges) {
+
+  for (let propName in changes) {
+    let chng = changes[propName];
+    let cur  = JSON.stringify(chng.currentValue);
+    let prev = JSON.stringify(chng.previousValue);
+    
+  }
+}
 }

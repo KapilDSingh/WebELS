@@ -1,10 +1,10 @@
-import { EventEmitter, Injectable, OnInit } from '@angular/core';
+import { EventEmitter, Injectable, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { LMP } from '../Models/IsoModels';
 import { environment } from '../../environments/environment';
 
 @Injectable()
-export class SignalrISOdataService implements OnInit {
+export class SignalrISOdataService implements OnInit, OnChanges  {
   LMPmessageReceived = new EventEmitter<Array<LMP>>();
   connectionEstablished = new EventEmitter<Boolean>();
 
@@ -27,7 +27,7 @@ export class SignalrISOdataService implements OnInit {
       .build();
   }
 
-  private startConnection(): void {
+  private startConnection(): any {
     this._hubConnection
       .start()
       .then(() => {
@@ -48,6 +48,15 @@ export class SignalrISOdataService implements OnInit {
   }
   ngOnInit(): void {
 
+  }
+  ngOnChanges(changes: SimpleChanges) {
+
+    for (let propName in changes) {
+      let chng = changes[propName];
+      let cur  = JSON.stringify(chng.currentValue);
+      let prev = JSON.stringify(chng.previousValue);
+      
+    }
   }
 }
 
