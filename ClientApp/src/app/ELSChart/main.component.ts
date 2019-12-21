@@ -39,7 +39,7 @@ export class MainComponent implements OnInit {
     }
   };
 
-  @ViewChild('chart')
+  @ViewChild('chart', { static: true })
   chart: GoogleChartComponent;
 
   constructor(

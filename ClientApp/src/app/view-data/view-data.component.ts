@@ -30,7 +30,7 @@ export class ViewDataComponent implements OnInit, OnChanges {
   }> = [];
   changeLog: any;
 
-  @ViewChild('chart')
+  @ViewChild('chart', { static: false })
   chart: GoogleChartComponent;
 
 
