@@ -20,6 +20,7 @@ import { ViewDataComponent } from './view-data/view-data.component';
 import { MeterDataComponent } from './meter-data/meter-data.component';
 import { DigitalClockComponent } from './digital-clock/digital-clock.component';
 import { UtilService } from './shared/services/util/util.service';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 
@@ -35,6 +36,7 @@ import { UtilService } from './shared/services/util/util.service';
     ViewDataComponent,
     DigitalClockComponent,
     MeterDataComponent,
+    NavbarComponent,
 
   ],
   imports: [
@@ -43,7 +45,7 @@ import { UtilService } from './shared/services/util/util.service';
     FormsModule,
     GoogleChartsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      //{ path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'ELSChart', component: MainComponent },
