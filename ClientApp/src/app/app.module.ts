@@ -23,6 +23,8 @@ import { UtilService } from './shared/services/util/util.service';
 import { NavbarComponent } from './navbar/navbar.component';
 
 
+import {APP_BASE_HREF} from '@angular/common';
+
 
 @NgModule({
   declarations: [
@@ -57,7 +59,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     ]),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [SignalrISOdataService,UtilService],
+  providers: [SignalrISOdataService,UtilService,{provide: APP_BASE_HREF, useValue: ' '}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

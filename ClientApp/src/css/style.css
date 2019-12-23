@@ -9,22 +9,6 @@
 # General
 --------------------------------------------------------------*/
 
-  /* @import url("img/favicon.png" rel="icon")
-  @import url("img/apple-touch-icon.png" rel="apple-touch-icon"> */
-
-
-  @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,600,700,700i|Montserrat:300,400,500,600,700");
-
-
-  @import "lib/bootstrap/css/bootstrap.min.css";
-
-
-  @import "lib/font-awesome/css/font-awesome.min.css";
-  @import "lib/animate/animate.min.css";
-  @import "lib/ionicons/css/ionicons.min.css";
-  @import "lib/owlcarousel/assets/owl.carousel.min.css";
-  @import "lib/lightbox/css/lightbox.min.css";
-
 body {
   background: #fff;
   color: #444;
@@ -230,7 +214,7 @@ h6 {
   width: 100%;
   height: 100vh;
   position: relative;
-  background: #f5f8fd url("./img/intro-bg.jpg") center top no-repeat;
+  background: #f5f8fd url("../img/intro-bg.jpg") center top no-repeat;
   background-size: cover;
 }
 
