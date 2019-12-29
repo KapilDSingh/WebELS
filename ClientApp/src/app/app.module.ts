@@ -21,7 +21,7 @@ import { MeterDataComponent } from './meter-data/meter-data.component';
 import { DigitalClockComponent } from './digital-clock/digital-clock.component';
 import { UtilService } from './shared/services/util/util.service';
 import { NavbarComponent } from './navbar/navbar.component';
-
+import { IntroComponent } from './intro/intro.component';
 
 import {APP_BASE_HREF} from '@angular/common';
 
@@ -39,7 +39,7 @@ import {APP_BASE_HREF} from '@angular/common';
     DigitalClockComponent,
     MeterDataComponent,
     NavbarComponent,
-
+    IntroComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -47,7 +47,7 @@ import {APP_BASE_HREF} from '@angular/common';
     FormsModule,
     GoogleChartsModule,
     RouterModule.forRoot([
-      //{ path: '', component: HomeComponent, pathMatch: 'full' },
+      
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'ELSChart', component: MainComponent },
@@ -55,6 +55,7 @@ import {APP_BASE_HREF} from '@angular/common';
       { path: 'view-data', component: ViewDataComponent },
       { path: 'meter-data', component: MeterDataComponent },
       { path: 'digital-clock', component: DigitalClockComponent },
+      { path: 'app-intro', component: IntroComponent },
 
     ]),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })

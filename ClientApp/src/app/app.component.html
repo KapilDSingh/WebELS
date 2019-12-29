@@ -1,9 +1,36 @@
-<!--replace everything in this file with the code below.-->
-<app-navbar></app-navbar>
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2><router-outlet></router-outlet> </h2>
+<!DOCTYPE html>
+<html>
+
+
+
+  <app-navbar></app-navbar>
+  
+
+
+
+<body>
+  <!--==========================
+    Intro Section
+  ============================-->
+  <section id="intro" class="clearfix">
+    <div class="container d-flex h-100">
+      <div class="row justify-content-left align-self-center">
+        <div class="col-md intro-info order-md-first order-first">
+          <h1> Smart Amperes LLC</h1><br>
+          <h2>Electric Demand Management<br> for Your <span>Business!</span></h2>
+          <div>
+            <a href="#about" class="btn-get-started scrollto">Get Started</a>
+          </div>
+        </div>
+  
+        
+      </div>
+
+    </div>
+  </section><!-- #intro -->
+
+  <router-outlet></router-outlet>
+  
+</body>
+
+</html>

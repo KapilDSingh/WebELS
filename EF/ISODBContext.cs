@@ -25,9 +25,12 @@ namespace WebELS.EF
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Data Source=tcp:100.25.120.167\EC2AMAZ-I2S81GT,1433;Initial Catalog=ISODB;User ID=KapilSingh;Password=Acfjo12#;");
+                //private const string ConnectionString = @"Data Source=tcp:KAPILDELLSSD\SQLEXPRESS,1433;Initial Catalog=ISODB;Integrated Security = False;User ID=Kapil;Password=Acfjo12#;";
+
+                optionsBuilder.UseSqlServer(@"Data Source = tcp:KAPILDELLSSD\SQLEXPRESS;Initial Catalog = ISODB; Integrated Security = False; User ID = Kapil; Password=Acfjo12#;");
             }
         }
+    
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
