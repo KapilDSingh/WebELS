@@ -48,6 +48,7 @@ import {APP_BASE_HREF} from '@angular/common';
     GoogleChartsModule,
     RouterModule.forRoot([
       
+      { path: 'home', component: HomeComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'ELSChart', component: MainComponent },
@@ -56,7 +57,9 @@ import {APP_BASE_HREF} from '@angular/common';
       { path: 'meter-data', component: MeterDataComponent },
       { path: 'digital-clock', component: DigitalClockComponent },
       { path: 'app-intro', component: IntroComponent },
+      { path: '', redirectTo: '/home', pathMatch: 'full' }
 
+    
     ]),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
