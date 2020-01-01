@@ -1,0 +1,25 @@
+
+
+
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    display: block;
+    position: relative;
+    color: #413e66;
+    padding: 10px 15px;
+    transition: 0.3s;
+    font-size: 14px;
+    font-family: "Open Sans", sans-serif;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #0a98c0;
+    outline: none;
+    text-decoration: none;
+}
+
+

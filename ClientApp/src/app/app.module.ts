@@ -24,6 +24,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { IntroComponent } from './intro/intro.component';
 
 import {APP_BASE_HREF} from '@angular/common';
+import { RtgridvaluesComponent } from './rtgridvalues/rtgridvalues.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import {APP_BASE_HREF} from '@angular/common';
     MeterDataComponent,
     NavbarComponent,
     IntroComponent,
+    RtgridvaluesComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
