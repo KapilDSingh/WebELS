@@ -59,10 +59,11 @@ import { RtgridvaluesComponent } from './rtgridvalues/rtgridvalues.component';
       { path: 'meter-data', component: MeterDataComponent },
       { path: 'digital-clock', component: DigitalClockComponent },
       { path: 'app-intro', component: IntroComponent },
-      { path: '', redirectTo: '/home', pathMatch: 'full' }
-
-    
-    ]),
+      { path: '', redirectTo: '/home', pathMatch: 'full' }    
+    ],
+    {
+      onSameUrlNavigation: 'reload'
+    }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [SignalrISOdataService,UtilService,{provide: APP_BASE_HREF, useValue: ' '}],

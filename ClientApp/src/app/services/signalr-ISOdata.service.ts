@@ -2,11 +2,15 @@ import { EventEmitter, Injectable, OnInit, OnChanges, SimpleChanges } from '@ang
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { LMP } from '../Models/IsoModels';
 import { environment } from '../../environments/environment';
+import { loadTblRow } from '../Models/IsoModels';
 
 @Injectable()
 export class SignalrISOdataService implements OnInit, OnChanges  {
-  LMPmessageReceived = new EventEmitter<Array<LMP>>();
   connectionEstablished = new EventEmitter<Boolean>();
+  
+  LMPmessageReceived = new EventEmitter<Array<LMP>>();
+  
+  LoadmessageReceived = new EventEmitter<Array<loadTblRow>>();
 
   public connectionIsEstablished = false;
   public _hubConnection: HubConnection;
@@ -20,7 +24,9 @@ export class SignalrISOdataService implements OnInit, OnChanges  {
   public  sendLMPData(n: any ) {
     this._hubConnection.invoke('SendLMP', n);
   }
-
+  public  sendLoadData(n: any ) {
+    this._hubConnection.invoke('SendLoad', n);
+  }
   private createConnection() {
     this._hubConnection = new HubConnectionBuilder()
       .withUrl(environment.hubUrl)
@@ -44,6 +50,9 @@ export class SignalrISOdataService implements OnInit, OnChanges  {
   private registerOnServerEvents(): void {
     this._hubConnection.on('ReceiveLMP', (data: any) => {
       this.LMPmessageReceived.emit(data);
+    });
+    this._hubConnection.on('ReceiveLoad', (data: any) => {
+      this.LoadmessageReceived.emit(data);
     });
   }
   ngOnInit(): void {

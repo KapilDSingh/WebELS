@@ -20,10 +20,12 @@ namespace WebELS.Model
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+ string ConnectionString = @"Data Source=tcp: kapilsingh.synology.me\SQLEXPRESS,1433;Initial Catalog=ISODB;Integrated Security = False;User ID=Kapil;Password=Acfjo12#;";
             if (!optionsBuilder.IsConfigured)
             {
-//warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer(@"Data Source=tcp:100.25.120.167\EC2AMAZ-I2S81GT,1433;Initial Catalog=ISODB;User ID=KapilSingh;Password=Acfjo12#;");
+                
+        //warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+        optionsBuilder.UseSqlServer(ConnectionString);
             }
         }
 

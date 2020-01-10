@@ -10,3 +10,10 @@ export class LMP {
 
   public timestamp: Date;
 }
+export class loadTblRow 
+{
+  public Area: string;
+  public Instantaneous_Load: number;
+  public timestamp: Date;
+  public load: number;
+}
