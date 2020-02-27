@@ -52,8 +52,8 @@ export class IsoChartsComponent implements OnChanges, OnInit {
     this.router.events.pipe(
       filter((event: RouterEvent) => event instanceof NavigationEnd)
     ).subscribe(() => {
-      this.sendLMPData(1288);
-      this.sendLoadData(1288);
+      this.sendLMPData(1512);
+      this.sendLoadData(1512);
       this.sendfuelTypeData(24);
     });
   }
