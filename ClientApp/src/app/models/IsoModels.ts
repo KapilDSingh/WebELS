@@ -13,7 +13,22 @@ export class LMP {
 export class loadTblRow 
 {
   public Area: string;
-  public Instantaneous_Load: number;
+  public instantaneous_Load: number;
   public timestamp: Date;
   public load: number;
+}
+
+export class fuelTypeData {
+  public timestamp: Date;
+  public gas: number;
+  public nuclear: number;
+  public coal: number;
+  public hydro: number;
+  public wind: number;
+  public solar: number;
+  public multipleFuels: number;
+  public otherRenewables: number;
+  public oil: number;
+  public other: number;
+  public storage: number;
 }

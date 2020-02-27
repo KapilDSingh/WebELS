@@ -27,12 +27,22 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="Models\DB\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="Models\DB\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="Models\DB\**" />
+    <None Remove="Models\DB\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="GetLMPData.cs" />
+    <Compile Remove="lmpTbl.cs" />
+    <Compile Remove="loadTbl.cs" />
+    <Compile Remove="Models\genmixTbl.cs" />
     <Compile Remove="SqlTableDependencies\GaugeDatabaseSubscription.cs" />
     <Compile Remove="SqlTableDependencies\IDatabaseSubscription.cs" />
   </ItemGroup>
@@ -80,10 +90,6 @@
 
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="MeterDataQuery.ts" />
   </ItemGroup>
 
   <ItemGroup>

@@ -17,37 +17,50 @@ export class ViewDataComponent implements OnInit, OnChanges {
   @Input() chartData: Array<Array<Date | number | string>>;
   @Input() chartType: string;
 
-
-
-  charts: Array<{
+  LMPChart: {
     title: string,
     type: string,
-    data: Array<Array<Date | number | string | {}>>,
-    roles: Array<{type: string, role: string}>,
+    data: Array<Array<string | number | {}>>,
+    roles: Array<{ type: string, role: string }>,
     columnNames?: Array<string>,
     options?: {}
-  }> = [];
-  changeLog: any;
+  }
+  
+  public drawLMPChart() {
+    this.LMPChart = {
+      title: this.StringToChild,
+      type: 'AreaChart',
+      data: this.chartData,
+      
+      columnNames: ['Time', '5 Minute Avg. LMP'],
+      roles: [],
+      options: {
+        
+        vAxis: {title: '$/MwH', ['format']:'$'},
+        hAxis: {title: 'Time'},
+        seriesType:'area',
+        
+        colors: ['#ffb3ba'],
+       legend:'bottom',
+       backgroundColor: '#f5f8fd',
+       titleTextStyle: {
+        color: 'black',    // any HTML string color ('red', '#cc00cc')
+        fontName: 'Monteserrat', // i.e. 'Times New Roman'
+        fontSize: 20, // 12, 18 whatever you want (don't specify px)
+        bold: false,    // true or false
+        italic:true   // true of false
+    }
+      },
+    };
+  }
 
-  @ViewChild('chart2', { static: false })
+  @ViewChild('chart', { static: true })
   chart: GoogleChartComponent;
   constructor(
     private router: Router
   ) {
   }
 
-  public drawLMPChart() {
-
-    this.charts.length = 0;
-    this.charts.push({
-      title: this.StringToChild,
-      type: 'AreaChart',
-      columnNames: ['Time', '5 Minute Avg. LMP', 'Hourly Integrated LMP'],
-      data: this.chartData,
-
-      roles: []
-    });
-  }
 
   onReady() {
     console.log('Chart ready');

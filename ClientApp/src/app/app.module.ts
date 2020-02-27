@@ -24,7 +24,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { IntroComponent } from './intro/intro.component';
 
 import {APP_BASE_HREF} from '@angular/common';
-import { RtgridvaluesComponent } from './rtgridvalues/rtgridvalues.component';
+import { LoadChartComponent } from './load-chart/load-chart.component';
+import { GenmixChartComponent } from './genmix-chart/genmix-chart.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { RtgridvaluesComponent } from './rtgridvalues/rtgridvalues.component';
     MeterDataComponent,
     NavbarComponent,
     IntroComponent,
-    RtgridvaluesComponent,
+    LoadChartComponent,
+    GenmixChartComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -52,13 +54,14 @@ import { RtgridvaluesComponent } from './rtgridvalues/rtgridvalues.component';
       
       { path: 'home', component: HomeComponent },
       { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'app-fetch-data', component: FetchDataComponent },
       { path: 'ELSChart', component: MainComponent },
       { path: 'iso-data', component: IsoChartsComponent },
       { path: 'view-data', component: ViewDataComponent },
-      { path: 'meter-data', component: MeterDataComponent },
+      { path: 'app-meter-data', component: MeterDataComponent },
       { path: 'digital-clock', component: DigitalClockComponent },
       { path: 'app-intro', component: IntroComponent },
+      { path: 'app-els-chart', component: MainComponent },
       { path: '', redirectTo: '/home', pathMatch: 'full' }    
     ],
     {

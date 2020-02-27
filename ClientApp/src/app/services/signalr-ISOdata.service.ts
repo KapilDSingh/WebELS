@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
-import { LMP } from '../Models/IsoModels';
+import { LMP, fuelTypeData } from '../Models/IsoModels';
 import { environment } from '../../environments/environment';
 import { loadTblRow } from '../Models/IsoModels';
 
@@ -11,6 +11,8 @@ export class SignalrISOdataService implements OnInit, OnChanges  {
   LMPmessageReceived = new EventEmitter<Array<LMP>>();
   
   LoadmessageReceived = new EventEmitter<Array<loadTblRow>>();
+
+  GenmixmessageReceived = new EventEmitter<Array<fuelTypeData>>();
 
   public connectionIsEstablished = false;
   public _hubConnection: HubConnection;
@@ -26,6 +28,9 @@ export class SignalrISOdataService implements OnInit, OnChanges  {
   }
   public  sendLoadData(n: any ) {
     this._hubConnection.invoke('SendLoad', n);
+  }
+  public sendfuelTypeData(n: any) {
+    this._hubConnection.invoke('SendGenmix', n);
   }
   private createConnection() {
     this._hubConnection = new HubConnectionBuilder()
@@ -53,6 +58,9 @@ export class SignalrISOdataService implements OnInit, OnChanges  {
     });
     this._hubConnection.on('ReceiveLoad', (data: any) => {
       this.LoadmessageReceived.emit(data);
+    });
+    this._hubConnection.on('ReceiveGenmix', (data: any) => {
+      this.GenmixmessageReceived.emit(data);
     });
   }
   ngOnInit(): void {

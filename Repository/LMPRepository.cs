@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebELS.EF;
 using WebELS.Models;
 
 namespace WebELS.Repository
@@ -32,8 +31,9 @@ namespace WebELS.Repository
             using (var context = _contextFactory.Invoke())
             {
                 LMPdata = (from x in context.lmpTbl where x.node_id == "PSEG"  && x.Type == "ZONE" orderby x.timestamp descending select x).Take(n).ToList();
+                LMPdata.Reverse();
 
-               
+
                 return LMPdata;
 
             }

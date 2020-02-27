@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.SignalR;
-using WebELS.EF;
 using WebELS.Hubs;
 using WebELS.Repository;
 using WebELS.SqlTableDependencies;
@@ -43,6 +42,8 @@ namespace WebELS
             // dependency injection
             services.AddDbContextFactory<ISODBContext>(ConnectionString);
             services.AddSingleton<ILMPRepository, LMPRepository>();
+            services.AddSingleton<ILoadRepository, LoadRepository>();
+            services.AddSingleton<IFuelTypeRepository,FuelTypeRepository>();
             services.AddSingleton<IISODBSubscription, ISODBSubscription>();
         }
 

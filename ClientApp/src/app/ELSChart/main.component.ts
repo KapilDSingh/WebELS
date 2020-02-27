@@ -3,6 +3,7 @@ import { ChartErrorEvent, ChartEvent, GoogleChartComponent } from '../../../proj
 
 import { Router } from '@angular/router';
 import { LMP } from '../Models/IsoModels';
+import { loadTblRow } from '../Models/IsoModels';
 
 @Component({
   selector: 'app-els-chart',

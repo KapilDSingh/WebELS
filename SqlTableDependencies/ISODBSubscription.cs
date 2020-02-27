@@ -23,21 +23,32 @@ using System.Collections.Generic;
 
 namespace WebELS.SqlTableDependencies
 {
-    public class ISODBSubscription: IISODBSubscription
+    public class ISODBSubscription : IISODBSubscription
     {
 
         private bool _disposedValue;
 
         private readonly IHubContext<ISODataHub> _hubContext;
-        
-        private  ILMPRepository _LMPrepository;
-        private  SqlTableDependency<lmpTbl> _LMPtableDependency;
+
+        private ILMPRepository _LMPrepository;
+        private ILoadRepository _Loadrepository;
+        private IFuelTypeRepository _FuelTypeRepository;
+
+        private SqlTableDependency<GenFuelTbl> _GenFueltableDependency;
+        private SqlTableDependency<lmpTbl> _LMPtableDependency;
+
+        private SqlTableDependency<loadTbl> _LoadTableDependency;
 
 
-        public ISODBSubscription(ILMPRepository repository, IHubContext<ISODataHub> hubContext)
+
+
+    
+    public ISODBSubscription(ILMPRepository repository, ILoadRepository loadRepository, IFuelTypeRepository FuelTypeRepository, IHubContext<ISODataHub> hubContext)
         {
             _LMPrepository = repository;
             _hubContext = hubContext;
+            _Loadrepository = loadRepository;
+            _FuelTypeRepository = FuelTypeRepository;
         }
 
         public void Configure(string ConnectionString)
@@ -57,7 +68,35 @@ namespace WebELS.SqlTableDependencies
                 _LMPtableDependency.OnError += TableDependency_OnError;
                 _LMPtableDependency.Start();
 
-                Console.WriteLine("Waiting for receiving notifications...");
+            // Define WHERE filter specifing the WHERE condition
+            // We also pass the mapper defined above as last contructor's parameter
+            Expression<Func<loadTbl, bool>> Loadexpression = p =>
+                p.Area == "PJM RTO";
+
+            ITableDependencyFilter whereLoadCondition = new SqlTableDependencyFilter<loadTbl>(
+                Loadexpression);
+
+
+            _LoadTableDependency = new SqlTableDependency<loadTbl>(ConnectionString,
+                filter: whereLoadCondition, executeUserPermissionCheck: false);
+            _LoadTableDependency.OnChanged += LoadChanged;
+            _LoadTableDependency.OnError += TableDependency_OnError;
+            _LoadTableDependency.Start();
+
+            //***********
+
+
+
+
+
+
+            _GenFueltableDependency = new SqlTableDependency<GenFuelTbl>(ConnectionString,
+                executeUserPermissionCheck: false);
+            _GenFueltableDependency.OnChanged += GenFueltableDependency;
+            _GenFueltableDependency.OnError += TableDependency_OnError;
+            _GenFueltableDependency.Start();
+
+            Console.WriteLine("Waiting for receiving notifications...");
 
         }
 
@@ -75,6 +114,31 @@ namespace WebELS.SqlTableDependencies
                 data.Add(e.Entity);
                 // _LMPrepository.LMPdata = _LMPrepository.GetLMP(1);
                 _hubContext.Clients.All.SendAsync("ReceiveLMP", data);
+
+            }
+        }
+        private void LoadChanged(object sender, RecordChangedEventArgs<loadTbl> e)
+        {
+            if (e.ChangeType != ChangeType.None)
+            {
+                List<loadTbl> data = new List<loadTbl>();
+
+                data.Add(e.Entity);
+                
+                _hubContext.Clients.All.SendAsync("ReceiveLoad", data);
+
+            }
+        }
+
+        private void GenFueltableDependency(object sender, RecordChangedEventArgs<GenFuelTbl> e)
+        {
+            if (e.ChangeType != ChangeType.None)
+            {
+                List<fuelTypeData> data = new List<fuelTypeData>();
+                data = _FuelTypeRepository.GetFuelType(48);
+
+
+                _hubContext.Clients.All.SendAsync("ReceiveGenmix", data);
 
             }
         }
