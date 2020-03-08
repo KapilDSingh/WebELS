@@ -1,1 +1,2 @@
 ﻿https://summary.ekmmetering.com/summary?key=NjUyMzc0MjQ6Z3NaVmhEd20&meters=550001081&format=json&report=15&limit=10&offset=0&timelimit=1&timezone=America~New_York&fields=kWh_Tot_Max~kWh_Tot_Min~RMS_Volts_Ln_1_Average~RMS_Volts_Ln_2_Average~RMS_Volts_Ln_3_Average&normalize=1
+https://io.ekmpush.com/readMeter?key=NjUyMzc0MjQ6Z3NaVmhEd20&meters=550001081&ver=v4&fmt=html&cnt=1&tz=America~New_York&fields=kWh_Tot~RMS_Volts_Ln_1~RMS_Volts_Ln_2~RMS_Volts_Ln_3~Amps_Ln_1~Amps_Ln_2~Amps_Ln_3

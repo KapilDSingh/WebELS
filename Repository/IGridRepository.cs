@@ -16,3 +16,8 @@ namespace WebELS.Repository
         List<fuelTypeData> GetFuelType(int n);
     }
 }
+public interface IMeterDataRepository
+{
+    List<fuelTypeData> fuelTypeData { get; set; }
+    List<fuelTypeData> GetFuelType(int n);
+}

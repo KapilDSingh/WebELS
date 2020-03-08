@@ -44,7 +44,11 @@ namespace WebELS
             services.AddSingleton<ILMPRepository, LMPRepository>();
             services.AddSingleton<ILoadRepository, LoadRepository>();
             services.AddSingleton<IFuelTypeRepository,FuelTypeRepository>();
+            services.AddSingleton<IElectricUseRepository, ElectricUseRepository>();
             services.AddSingleton<IISODBSubscription, ISODBSubscription>();
+            
+
+            services.AddHostedService<MeterDataService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

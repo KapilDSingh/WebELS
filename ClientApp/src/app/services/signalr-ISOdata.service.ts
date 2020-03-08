@@ -3,6 +3,7 @@ import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { LMP, fuelTypeData } from '../Models/IsoModels';
 import { environment } from '../../environments/environment';
 import { loadTblRow } from '../Models/IsoModels';
+import { MeterData } from '../Models/MeterModel';
 
 @Injectable()
 export class SignalrISOdataService implements OnInit, OnChanges  {
@@ -13,6 +14,8 @@ export class SignalrISOdataService implements OnInit, OnChanges  {
   LoadmessageReceived = new EventEmitter<Array<loadTblRow>>();
 
   GenmixmessageReceived = new EventEmitter<Array<fuelTypeData>>();
+ 
+  MeterDataMessageReceived = new EventEmitter<Array<MeterData>>();
 
   public connectionIsEstablished = false;
   public _hubConnection: HubConnection;
@@ -32,6 +35,10 @@ export class SignalrISOdataService implements OnInit, OnChanges  {
   public sendfuelTypeData(n: any) {
     this._hubConnection.invoke('SendGenmix', n);
   }
+  public SendMeterData(n: any) {
+    this._hubConnection.invoke('SendMeterData', n);
+  }
+
   private createConnection() {
     this._hubConnection = new HubConnectionBuilder()
       .withUrl(environment.hubUrl)
@@ -59,8 +66,13 @@ export class SignalrISOdataService implements OnInit, OnChanges  {
     this._hubConnection.on('ReceiveLoad', (data: any) => {
       this.LoadmessageReceived.emit(data);
     });
+    
     this._hubConnection.on('ReceiveGenmix', (data: any) => {
       this.GenmixmessageReceived.emit(data);
+    });
+
+    this._hubConnection.on('ReceiveMeterData', (data: any) => {
+      this.MeterDataMessageReceived.emit(data);
     });
   }
   ngOnInit(): void {

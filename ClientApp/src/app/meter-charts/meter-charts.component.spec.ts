@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MeterDataComponent } from './meter-data.component';
+import { MeterChartsComponent } from './meter-charts.component';
 
-describe('MeterDataComponent', () => {
-  let component: MeterDataComponent;
-  let fixture: ComponentFixture<MeterDataComponent>;
+describe('MeterChartsComponent', () => {
+  let component: MeterChartsComponent;
+  let fixture: ComponentFixture<MeterChartsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MeterDataComponent ]
+      declarations: [ MeterChartsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MeterDataComponent);
+    fixture = TestBed.createComponent(MeterChartsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

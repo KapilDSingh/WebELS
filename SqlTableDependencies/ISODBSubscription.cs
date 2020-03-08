@@ -20,6 +20,7 @@ using System.Linq.Expressions;
 using TableDependency.SqlClient.Base.Abstracts;
 using TableDependency.SqlClient.Where;
 using System.Collections.Generic;
+using QuickType;
 
 namespace WebELS.SqlTableDependencies
 {
@@ -33,6 +34,7 @@ namespace WebELS.SqlTableDependencies
         private ILMPRepository _LMPrepository;
         private ILoadRepository _Loadrepository;
         private IFuelTypeRepository _FuelTypeRepository;
+        private IElectricUseRepository _ElectricUse;
 
         private SqlTableDependency<GenFuelTbl> _GenFueltableDependency;
         private SqlTableDependency<lmpTbl> _LMPtableDependency;
@@ -49,6 +51,7 @@ namespace WebELS.SqlTableDependencies
             _hubContext = hubContext;
             _Loadrepository = loadRepository;
             _FuelTypeRepository = FuelTypeRepository;
+            
         }
 
         public void Configure(string ConnectionString)
@@ -57,6 +60,8 @@ namespace WebELS.SqlTableDependencies
             // We also pass the mapper defined above as last contructor's parameter
             Expression<Func<lmpTbl, bool>> expression = p =>
                 p.node_id  == "PSEG" ;
+
+           
 
             ITableDependencyFilter whereCondition = new SqlTableDependencyFilter<lmpTbl>(
                 expression);
@@ -158,6 +163,8 @@ namespace WebELS.SqlTableDependencies
                 if (disposing)
                 {
                     _LMPtableDependency.Stop();
+                    _LoadTableDependency.Stop();
+                    _GenFueltableDependency.Stop();
                 }
 
                 _disposedValue = true;

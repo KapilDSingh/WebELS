@@ -17,7 +17,7 @@ import { IsoChartsComponent } from './iso-charts/iso-charts.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ViewDataComponent } from './view-data/view-data.component';
-import { MeterDataComponent } from './meter-data/meter-data.component';
+
 import { DigitalClockComponent } from './digital-clock/digital-clock.component';
 import { UtilService } from './shared/services/util/util.service';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -26,6 +26,8 @@ import { IntroComponent } from './intro/intro.component';
 import {APP_BASE_HREF} from '@angular/common';
 import { LoadChartComponent } from './load-chart/load-chart.component';
 import { GenmixChartComponent } from './genmix-chart/genmix-chart.component';
+import { MeterChartsComponent } from './meter-charts/meter-charts.component';
+import { MeterViewChartComponent } from './meter-view-chart/meter-view-chart.component';
 
 
 @NgModule({
@@ -39,11 +41,13 @@ import { GenmixChartComponent } from './genmix-chart/genmix-chart.component';
     IsoChartsComponent,
     ViewDataComponent,
     DigitalClockComponent,
-    MeterDataComponent,
+
     NavbarComponent,
     IntroComponent,
     LoadChartComponent,
     GenmixChartComponent,
+    MeterChartsComponent,
+    MeterViewChartComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -58,7 +62,7 @@ import { GenmixChartComponent } from './genmix-chart/genmix-chart.component';
       { path: 'ELSChart', component: MainComponent },
       { path: 'iso-data', component: IsoChartsComponent },
       { path: 'view-data', component: ViewDataComponent },
-      { path: 'app-meter-data', component: MeterDataComponent },
+      { path: 'app-meter-charts', component: MeterChartsComponent },
       { path: 'digital-clock', component: DigitalClockComponent },
       { path: 'app-intro', component: IntroComponent },
       { path: 'app-els-chart', component: MainComponent },
