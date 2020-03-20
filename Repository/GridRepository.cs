@@ -85,6 +85,56 @@ namespace WebELS.Repository
         }
 
     }
+    public class MeterRepository : IMeterRepository
+    {
+        private readonly Func<ISODBContext> _contextFactory;
+
+        public List<MeterTbl> _meterData;
+        public string _meterId;
+
+        public void SetMeterId(string MeterId)
+        {
+            _meterId = MeterId;
+        }
+        public string MeterId
+        {
+            get
+            {
+                return this._meterId;
+            }
+            set => this._meterId = value;
+        }
+
+        public List<MeterTbl> MeterData
+        {
+            get
+            {
+                return this._meterData;
+            }
+            set => this._meterData = value;
+        }
+
+
+        public MeterRepository(Func<ISODBContext> context)
+        {
+            _contextFactory = context;
+
+
+        }
+        public List<MeterTbl> GetMeterData(int n, string MeterId)
+        {
+            using (var context = _contextFactory.Invoke())
+            {
+                MeterData = (from x in context.MeterTbl where x.MeterId == MeterId orderby x.Timestamp descending select x).Take(n).ToList();
+                MeterData.Reverse();
+
+
+                return MeterData;
+
+            }
+        }
+
+    }
 
 }
 

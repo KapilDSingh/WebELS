@@ -45,6 +45,7 @@
     <Compile Remove="lmpTbl.cs" />
     <Compile Remove="loadTbl.cs" />
     <Compile Remove="Models\genmixTbl.cs" />
+    <Compile Remove="Repository\MeterDataService.cs" />
     <Compile Remove="SqlTableDependencies\GaugeDatabaseSubscription.cs" />
     <Compile Remove="SqlTableDependencies\IDatabaseSubscription.cs" />
   </ItemGroup>

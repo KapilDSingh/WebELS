@@ -35,8 +35,8 @@ export class SignalrISOdataService implements OnInit, OnChanges  {
   public sendfuelTypeData(n: any) {
     this._hubConnection.invoke('SendGenmix', n);
   }
-  public SendMeterData(n: any) {
-    this._hubConnection.invoke('SendMeterData', n);
+  public SendMeterData(n: any, MeterId: string) {
+    this._hubConnection.invoke('SendMeterData', n, '550001081');
   }
 
   private createConnection() {

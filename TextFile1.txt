@@ -1,0 +1,1 @@
+Scaffold-DbContext "Data Source=tcp: kapilsingh.synology.me\SQLEXPRESS,1433;Initial Catalog=ISODB;Integrated Security = False;User ID=Kapil;Password=Acfjo12#;" Microsoft.EntityFrameworkCore.SqlServer  -OutputDir Models

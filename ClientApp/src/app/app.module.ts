@@ -28,6 +28,8 @@ import { LoadChartComponent } from './load-chart/load-chart.component';
 import { GenmixChartComponent } from './genmix-chart/genmix-chart.component';
 import { MeterChartsComponent } from './meter-charts/meter-charts.component';
 import { MeterViewChartComponent } from './meter-view-chart/meter-view-chart.component';
+import { DashBoardChartComponent } from './dash-board-chart/dash-board-chart.component';
+import { GoogleChartService } from './services/google-chart.service';
 
 
 @NgModule({
@@ -48,6 +50,7 @@ import { MeterViewChartComponent } from './meter-view-chart/meter-view-chart.com
     GenmixChartComponent,
     MeterChartsComponent,
     MeterViewChartComponent,
+    DashBoardChartComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -65,6 +68,8 @@ import { MeterViewChartComponent } from './meter-view-chart/meter-view-chart.com
       { path: 'app-meter-charts', component: MeterChartsComponent },
       { path: 'digital-clock', component: DigitalClockComponent },
       { path: 'app-intro', component: IntroComponent },
+      { path: 'app-dash-board-chart', component: DashBoardChartComponent },
+      
       { path: 'app-els-chart', component: MainComponent },
       { path: '', redirectTo: '/home', pathMatch: 'full' }    
     ],
@@ -73,7 +78,7 @@ import { MeterViewChartComponent } from './meter-view-chart/meter-view-chart.com
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [SignalrISOdataService,UtilService,{provide: APP_BASE_HREF, useValue: ' '}],
+  providers: [SignalrISOdataService,GoogleChartService, UtilService,{provide: APP_BASE_HREF, useValue: ' '}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -38,16 +38,16 @@ export class MeterChartsComponent implements OnChanges, OnInit {
 
     });
   }
-  sendMeterData(n) {
+  sendMeterData(n, MeterId) {
     if (this.canSendMessage) {
-      this.signalrService.SendMeterData(n);
+      this.signalrService.SendMeterData(n, MeterId);
     }
   }
 
   private subscribeToEvents(): void {
     this.signalrService.connectionEstablished.subscribe(() => {
       this.canSendMessage = true;
-      this.sendMeterData(1000);
+      this.sendMeterData(1000, "550001081");
 
     });
 
@@ -87,10 +87,10 @@ export class MeterChartsComponent implements OnChanges, OnInit {
     let ChartDataPoints: Array<Array<Date | number | string>> = new Array<Array<Date | number | string>>();
 
     for (let i = 0; i < meterData.length; i++) {
-      const lmpDate = new Date(meterData[i].time);
+      const lmpDate = new Date(meterData[i].timestamp);
       let dataPoint: Array<Date | number | string> = new Array<Date | number | string>();
 
-      dataPoint.push(lmpDate,+meterData[i].kWh_Tot);
+      dataPoint.push(lmpDate,meterData[i].kWhTot);
       ChartDataPoints.push(dataPoint);
     }
     return ChartDataPoints;

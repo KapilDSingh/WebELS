@@ -22,6 +22,7 @@ namespace WebELS.Models
         public virtual DbSet<TradeTbl> tradeTbl { get; set; }
 
         public virtual DbSet<fuelTypeData> fuelTypeData { get; set; }
+        public virtual DbSet<MeterTbl> MeterTbl { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -87,6 +88,43 @@ namespace WebELS.Models
                 entity.Property(e => e.Iso).IsUnicode(false);
 
                 entity.Property(e => e.Market).IsUnicode(false);
+            });
+            modelBuilder.Entity<MeterTbl>(entity =>
+            {
+                entity.HasKey(e => new { e.MeterId, e.Timestamp });
+
+                entity.ToTable("meterTbl");
+
+                entity.Property(e => e.MeterId)
+                    .HasColumnName("MeterID")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Timestamp)
+                    .HasColumnName("timestamp")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.KWhTot).HasColumnName("kWh_Tot");
+
+                entity.Property(e => e.PowerFactorLn1).HasColumnName("Power_Factor_Ln_1");
+
+                entity.Property(e => e.PowerFactorLn2).HasColumnName("Power_Factor_Ln_2");
+
+                entity.Property(e => e.PowerFactorLn3).HasColumnName("Power_Factor_Ln_3");
+
+                entity.Property(e => e.RevKWhTot).HasColumnName("Rev_kWh_Tot");
+
+                entity.Property(e => e.RmsVoltsLn1).HasColumnName("RMS_Volts_Ln_1");
+
+                entity.Property(e => e.RmsVoltsLn2).HasColumnName("RMS_Volts_Ln_2");
+
+                entity.Property(e => e.RmsVoltsLn3).HasColumnName("RMS_Volts_Ln_3");
+
+                entity.Property(e => e.RmsWattsLn1).HasColumnName("RMS_Watts_Ln_1");
+
+                entity.Property(e => e.RmsWattsLn2).HasColumnName("RMS_Watts_Ln_2");
+
+                entity.Property(e => e.RmsWattsLn3).HasColumnName("RMS_Watts_Ln_3");
             });
         }
     }

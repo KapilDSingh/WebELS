@@ -20,7 +20,7 @@ using System.Linq.Expressions;
 using TableDependency.SqlClient.Base.Abstracts;
 using TableDependency.SqlClient.Where;
 using System.Collections.Generic;
-using QuickType;
+
 
 namespace WebELS.SqlTableDependencies
 {
@@ -34,24 +34,24 @@ namespace WebELS.SqlTableDependencies
         private ILMPRepository _LMPrepository;
         private ILoadRepository _Loadrepository;
         private IFuelTypeRepository _FuelTypeRepository;
-        private IElectricUseRepository _ElectricUse;
+        private IMeterRepository _MeterRepository;
 
         private SqlTableDependency<GenFuelTbl> _GenFueltableDependency;
         private SqlTableDependency<lmpTbl> _LMPtableDependency;
 
         private SqlTableDependency<loadTbl> _LoadTableDependency;
 
+        private SqlTableDependency<MeterTbl> _MeterTableDependency;
 
 
-
-    
-    public ISODBSubscription(ILMPRepository repository, ILoadRepository loadRepository, IFuelTypeRepository FuelTypeRepository, IHubContext<ISODataHub> hubContext)
+        public ISODBSubscription(ILMPRepository repository, ILoadRepository loadRepository, IFuelTypeRepository FuelTypeRepository, 
+            IMeterRepository MeterRepository,  IHubContext<ISODataHub> hubContext)
         {
             _LMPrepository = repository;
             _hubContext = hubContext;
             _Loadrepository = loadRepository;
             _FuelTypeRepository = FuelTypeRepository;
-            
+            _MeterRepository = MeterRepository;
         }
 
         public void Configure(string ConnectionString)
@@ -61,11 +61,8 @@ namespace WebELS.SqlTableDependencies
             Expression<Func<lmpTbl, bool>> expression = p =>
                 p.node_id  == "PSEG" ;
 
-           
-
             ITableDependencyFilter whereCondition = new SqlTableDependencyFilter<lmpTbl>(
                 expression);
-
 
             _LMPtableDependency = new SqlTableDependency<lmpTbl>(ConnectionString,
                 filter: whereCondition, executeUserPermissionCheck:false);
@@ -74,7 +71,7 @@ namespace WebELS.SqlTableDependencies
                 _LMPtableDependency.Start();
 
             // Define WHERE filter specifing the WHERE condition
-            // We also pass the mapper defined above as last contructor's parameter
+
             Expression<Func<loadTbl, bool>> Loadexpression = p =>
                 p.Area == "PJM RTO";
 
@@ -88,18 +85,19 @@ namespace WebELS.SqlTableDependencies
             _LoadTableDependency.OnError += TableDependency_OnError;
             _LoadTableDependency.Start();
 
-            //***********
-
-
-
-
-
 
             _GenFueltableDependency = new SqlTableDependency<GenFuelTbl>(ConnectionString,
                 executeUserPermissionCheck: false);
             _GenFueltableDependency.OnChanged += GenFueltableDependency;
             _GenFueltableDependency.OnError += TableDependency_OnError;
             _GenFueltableDependency.Start();
+
+            
+            _MeterTableDependency = new SqlTableDependency<MeterTbl>(ConnectionString,
+                 executeUserPermissionCheck: false);
+            _MeterTableDependency.OnChanged += MeterChanged;
+            _MeterTableDependency.OnError += TableDependency_OnError;
+            _MeterTableDependency.Start();
 
             Console.WriteLine("Waiting for receiving notifications...");
 
@@ -147,7 +145,18 @@ namespace WebELS.SqlTableDependencies
 
             }
         }
+        private void MeterChanged(object sender, RecordChangedEventArgs<MeterTbl> e)
+        {
+            if (e.ChangeType != ChangeType.None)
+            {
+                List<MeterTbl> data = new List<MeterTbl>();
 
+                data.Add(e.Entity);
+
+                _hubContext.Clients.All.SendAsync("ReceiveMeterData", data);
+
+            }
+        }
         #region IDisposable
 
         ~ISODBSubscription()
