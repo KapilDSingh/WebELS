@@ -45,6 +45,7 @@ namespace WebELS
             services.AddSingleton<ILoadRepository, LoadRepository>();
             services.AddSingleton<IFuelTypeRepository,FuelTypeRepository>();
             services.AddSingleton<IMeterRepository, MeterRepository>();
+           
             services.AddSingleton<IISODBSubscription, ISODBSubscription>();
             
 

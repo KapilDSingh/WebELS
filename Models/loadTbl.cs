@@ -14,4 +14,11 @@ namespace WebELS.Models
         [Column("timestamp", TypeName = "datetime")]
         public DateTime timestamp { get; set; }
     }
+    public partial class loadTblRow
+    {
+        [Column("Instantaneous Load")]
+        public long Instantaneous_Load { get; set; }
+        [Column("timestamp", TypeName = "datetime")]
+        public DateTime timestamp { get; set; }
+    }
 }

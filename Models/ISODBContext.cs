@@ -112,19 +112,19 @@ namespace WebELS.Models
 
                 entity.Property(e => e.PowerFactorLn3).HasColumnName("Power_Factor_Ln_3");
 
-                entity.Property(e => e.RevKWhTot).HasColumnName("Rev_kWh_Tot");
+                //entity.Property(e => e.RevKWhTot).HasColumnName("Rev_kWh_Tot");
 
-                entity.Property(e => e.RmsVoltsLn1).HasColumnName("RMS_Volts_Ln_1");
+                //entity.Property(e => e.RmsVoltsLn1).HasColumnName("RMS_Volts_Ln_1");
 
-                entity.Property(e => e.RmsVoltsLn2).HasColumnName("RMS_Volts_Ln_2");
+                //entity.Property(e => e.RmsVoltsLn2).HasColumnName("RMS_Volts_Ln_2");
 
-                entity.Property(e => e.RmsVoltsLn3).HasColumnName("RMS_Volts_Ln_3");
+                //entity.Property(e => e.RmsVoltsLn3).HasColumnName("RMS_Volts_Ln_3");
 
-                entity.Property(e => e.RmsWattsLn1).HasColumnName("RMS_Watts_Ln_1");
+                //entity.Property(e => e.RmsWattsLn1).HasColumnName("RMS_Watts_Ln_1");
 
-                entity.Property(e => e.RmsWattsLn2).HasColumnName("RMS_Watts_Ln_2");
+                //entity.Property(e => e.RmsWattsLn2).HasColumnName("RMS_Watts_Ln_2");
 
-                entity.Property(e => e.RmsWattsLn3).HasColumnName("RMS_Watts_Ln_3");
+                //entity.Property(e => e.RmsWattsLn3).HasColumnName("RMS_Watts_Ln_3");
             });
         }
     }

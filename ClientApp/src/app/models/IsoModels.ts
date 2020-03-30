@@ -10,12 +10,16 @@ export class LMP {
 
   public timestamp: Date;
 }
-export class loadTblRow 
-{
-  public Area: string;
+export class loadTblRow {
+
   public instantaneous_Load: number;
   public timestamp: Date;
-  public load: number;
+
+
+  constructor(instantaneous_Load: number, timestamp: Date) {
+    instantaneous_Load = instantaneous_Load;
+    timestamp = timestamp;
+  }
 }
 
 export class fuelTypeData {

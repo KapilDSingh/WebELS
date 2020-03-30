@@ -25,31 +25,31 @@ export class ViewDataComponent implements OnInit, OnChanges {
     columnNames?: Array<string>,
     options?: {}
   }
-  
+
   public drawLMPChart() {
     this.LMPChart = {
       title: this.StringToChild,
       type: 'AreaChart',
       data: this.chartData,
-      
+
       columnNames: ['Time', '5 Minute Avg. LMP'],
       roles: [],
       options: {
-        
-        vAxis: {title: '$/MwH', ['format']:'$'},
-        hAxis: {title: 'Time'},
-        seriesType:'area',
-        
+
+        vAxis: { title: '$/MwH', ['format']: '$' },
+        hAxis: { title: 'Time' },
+        seriesType: 'area',
+
         colors: ['#ffb3ba'],
-       legend:'bottom',
-       backgroundColor: '#f5f8fd',
-       titleTextStyle: {
-        color: 'black',    // any HTML string color ('red', '#cc00cc')
-        fontName: 'Monteserrat', // i.e. 'Times New Roman'
-        fontSize: 20, // 12, 18 whatever you want (don't specify px)
-        bold: false,    // true or false
-        italic:true   // true of false
-    }
+        legend: 'bottom',
+        backgroundColor: '#f5f8fd',
+        titleTextStyle: {
+          color: 'black',    // any HTML string color ('red', '#cc00cc')
+          fontName: 'Monteserrat', // i.e. 'Times New Roman'
+          fontSize: 20, // 12, 18 whatever you want (don't specify px)
+          bold: false,    // true or false
+          italic: true   // true of false
+        }
       },
     };
   }

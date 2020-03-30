@@ -124,11 +124,12 @@ namespace WebELS.SqlTableDependencies
         {
             if (e.ChangeType != ChangeType.None)
             {
-                List<loadTbl> data = new List<loadTbl>();
-
-                data.Add(e.Entity);
                 
-                _hubContext.Clients.All.SendAsync("ReceiveLoad", data);
+                loadTblRow loadData = new loadTblRow();
+                loadData.timestamp = e.Entity.timestamp;
+                loadData.Instantaneous_Load = e.Entity.Instantaneous_Load; ;
+
+                _hubContext.Clients.All.SendAsync("ReceiveLoad", loadData);
 
             }
         }

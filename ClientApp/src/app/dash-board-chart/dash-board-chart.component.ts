@@ -63,6 +63,8 @@ export class DashBoardChartComponent implements OnInit {
 
     // Draw the dashboard.
     dashboard.draw(data);
+
+    
     var dashboard = new this.gLib.visualization.Dashboard(
       document.getElementById('dashboard'));
 
