@@ -1,4 +1,17 @@
-.custom-about {
+/* div {
+  border: 2px solid;
+  
+ 
+  resize: both;
+  overflow: auto;
+} */
+.chart {
+  width: 100%; 
+  min-height: 800px;
+}
+.row {
+  margin:0 !important;
+}.custom-about {
     
     width: 100%;
     height: auto;

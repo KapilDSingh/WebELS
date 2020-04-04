@@ -9,6 +9,7 @@ import { LoadService } from '../services/load.service';
 import { SignalrISOdataService } from '../services/signalr-ISOdata.service';
 import { MiscService } from '../services/misc.service';
 import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
+import { ResizedEvent } from 'angular-resize-event';
 
 
 @Component({
@@ -26,6 +27,10 @@ export class LoadChartComponent implements OnInit {
   private loadDashboard: any;
   private chartTitle: string;
   private loadLine: any;
+  private loadDateSlider: any;
+  private width: number;
+  private height: number;
+
 
   constructor(private gChartService: GoogleChartService, private route: ActivatedRoute,
     private signalrService: SignalrISOdataService, private _ngZone: NgZone, private miscSvc: MiscService) {
@@ -47,8 +52,8 @@ export class LoadChartComponent implements OnInit {
 
     seriesType: 'area',
     vAxis: { title: 'MwH' },
-    hAxis: { title: 'Time' },
-    colors: ['#ffb3ba'],
+
+    colors: ['#00f9ff', 'red'],
     legend: {
       position: 'none'
     },
@@ -60,18 +65,11 @@ export class LoadChartComponent implements OnInit {
       bold: false,    // true or false
       italic: true   // true of false
     },
-    chartArea: { width: '80%', height: '70%' },
+    chartArea: { width: '90%', height: '80%' },
+    crosshair: { trigger: 'both' },
+    curveType: 'function',
   };
-  // Show some columns directly from the underlying data.
-  // Shows column 3 twice.
-  //   view.setColumns([3, 4, 3, 2]);
 
-  //   // Underlying table has a column specifying a value in centimeters.
-  //   // The view imports this directly, and creates a calculated column
-  //   // that converts the value into inches.
-  //   view.setColumns([1, { calc: cmToInches, type:'number', label:'Height in Inches'}]);
-  // function cmToInches(dataTable, rowNum) {
-  //   return Math.floor(dataTable.getValue(rowNum, 1) / 2.54);
   // }
   private drawLoadChart(options) {
 
@@ -80,22 +78,41 @@ export class LoadChartComponent implements OnInit {
     this.loadTable = new google.visualization.DataTable();
     this.loadTable.addColumn('date', 'Date');
     this.loadTable.addColumn('number', 'Load');
+    this.loadTable.addColumn({ type: 'string', role: 'style' });
+    this.loadTable.addColumn({ type: 'boolean', role: 'certainty' });
 
     for (let i = 0; i < this.chartData.length; i++) {
-      var chartRow = new Array<Date | number | string>();
-      chartRow.push(new Date(this.chartData[i].timestamp));
+      var chartRow = new Array<Date | number | string | Boolean>();
+      var date = new Date(this.chartData[i].timestamp);
+
+      chartRow.push(date);
       chartRow.push(this.chartData[i].instantaneous_Load);
+      var day = date.getDay();
+      if (day > 0 && day < 6) {
+        chartRow.push('color:#00f9ff');
+        chartRow.push(true);
+      }
+      else {
+
+        chartRow.push('opacity: 0.1;' +
+          'stroke-width: 5;' +
+          'stroke-color: #01a0ff;' +
+          'fill-color: #fff600');
+        chartRow.push(false);
+      }
+
       this.loadTable.addRow(chartRow);
     }
     this.chartTitle = 'Load Data as of ' + new Date(this.chartData[this.chartData.length - 1].timestamp).toString();
     this.minMaxDate = this.miscSvc.GetMinMaxdate(this.chartData);
     // Create a dashboard.
     var dash_container = document.getElementById('dashboard_div');
+
     this.loadDashboard = new this.gLib.visualization.Dashboard(dash_container);
 
 
     // Create a date range slider
-    var loadDateSlider = new this.gLib.visualization.ControlWrapper({
+    this.loadDateSlider = new this.gLib.visualization.ControlWrapper({
       'controlType': 'ChartRangeFilter',
       'containerId': 'control_div',
       'options': {
@@ -104,17 +121,19 @@ export class LoadChartComponent implements OnInit {
         'ui': {
           'chartType': 'LineChart',
           'chartOptions': {
-            'chartArea': { 'width': '80%' },
+            'chartArea': { 'width': '90%' },
             'hAxis': { 'baselineColor': 'none' },
+            colors: ['grey'],
             backgroundColor: '#f5f8fd',
           },
         },
 
-        //'state': { 'range': { 'start': new Date(this.minMaxDate.MinDate), 'end': new Date(this.minMaxDate.MinDate) } }
+        'state': { 'range': { 'start': this.minMaxDate.MinDate, 'end': this.minMaxDate.MaxDate } }
       }
     });
+    
     var date_formatter = new google.visualization.DateFormat({
-      pattern: "MMM dd, yyyy,  h:mm aa eee"
+      pattern: "MMM dd, yyyy,  h:mm aa "
     });
     date_formatter.format(this.loadTable, 0);  // Where 0 is the index of the column
 
@@ -134,22 +153,37 @@ export class LoadChartComponent implements OnInit {
     this.loadLine.setOption('title', this.chartTitle);
     // Bind loadLine to the dashboard, and to the controls
     // this will make sure our line chart is update when our date changes
-    this.loadDashboard.bind(loadDateSlider, this.loadLine);
+    this.loadDashboard.bind(this.loadDateSlider, this.loadLine);
 
     this.loadDashboard.draw(this.loadTable);
   }
-  private updateLoadChart(data: loadTblRow) 
-  {
+
+
+
+  private updateLoadChart(data: loadTblRow) {
     this.chartData.push(data);
 
     this.chartTitle = 'Load Data as of ' + new Date(data.timestamp).toString();
 
-    var chartRow = new Array<Date | number | string>();
+    var chartRow = new Array<Date | number | string | Boolean>();
+    var date = new Date(data.timestamp);
     chartRow.push(new Date(data.timestamp));
     chartRow.push(data.instantaneous_Load);
+    var day = date.getDay();
+    if (day > 0 && day < 6) {
+      chartRow.push('color:#00f9ff');
+      chartRow.push(true);
+    }
+    else {
 
-    if (this.loadDashboard != undefined) 
-    {
+      chartRow.push('opacity: 0.1;' +
+        'stroke-width: 5;' +
+        'stroke-color: #01a0ff;' +
+        'fill-color: #fff600');
+      chartRow.push(false);
+    }
+
+    if (this.loadDashboard != undefined) {
       this.loadTable.addRow(chartRow);
       var date_formatter = new google.visualization.DateFormat({
         pattern: "MMM dd, yyyy,  h:mm aa"
@@ -160,9 +194,24 @@ export class LoadChartComponent implements OnInit {
         { suffix: ' MWH', pattern: '#,###' });
 
       formatter.format(this.loadTable, 1); // Apply formatter to second column
- 
+
       this.loadLine.setOption('title', this.chartTitle);
       this.loadDashboard.draw(this.loadTable);
+
     }
+  }
+  onResized(event: ResizedEvent) {
+    this.width = event.newWidth;
+    this.height = event.newHeight;
+
+
+    console.log('width', this.width);
+    console.log('height', this.height);
+
+    if (this.loadLine != undefined) {
+      this.loadLine.draw();
+      this.loadDateSlider.draw();
+    }
+
   }
 }

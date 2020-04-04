@@ -34,7 +34,7 @@ export class GenmixChartComponent implements OnInit, OnChanges  {
       columnNames: ['timestamp','Gas', 'Nuclear', 'Coal','Hydro','Wind','Solar','Multiple Fuels', 'Other Renewables','Oil','Other', 'Storage'],
       roles: [],
       options: {
-        isStacked: 'absolute',
+        isStacked: 'percent',
         vAxis: {title: 'Generation Mix', ['format']:'percent'},
         hAxis: {title: 'Time'},
         

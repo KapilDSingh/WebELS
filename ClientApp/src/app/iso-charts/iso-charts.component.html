@@ -1,4 +1,4 @@
-<base href = "http://localhost:33383" />
+<base href="http://localhost:33383" />
 <div class="container=fluid custom-about">
   <div class="row justify-content-center align-self-center counters">
     <p>ISO PJM&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;Zone: PSEG</p>
@@ -6,24 +6,26 @@
 
   </div>
   <div class="row justify-content-left align-self-center">
-   
- 
-    <div class="col-md-6" >
-     
+
+    <div class="col-md-6">
+
       <app-view-data [chartData]="LMPchartData" [chartType]="LMPchartType" [StringToChild]="LMPStringToChild">
       </app-view-data>
 
 
     </div>
     <div class="col-md-6">
-      <app-genmix-chart [chartData]="GenmixchartData" [chartType]="GenmixchartType" [StringToChild]="GenmixStringToChild">
+      <app-genmix-chart [chartData]="GenmixchartData" [chartType]="GenmixchartType"
+        [StringToChild]="GenmixStringToChild">
       </app-genmix-chart>
     </div>
-    <div class="row justify-content-left align-self-center">
-  
-      <div class="col-md-8" >
- 
-        <app-load-chart>   </app-load-chart>
-  
-      </div>
   </div>
+  <div class="row">
+
+    <div class="col-md-6">
+
+      <app-load-chart> </app-load-chart>
+
+    </div>
+  </div>
+  

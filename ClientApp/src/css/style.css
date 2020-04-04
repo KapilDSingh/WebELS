@@ -119,7 +119,13 @@ h6 {
     transform: rotate(360deg);
   }
 }
-
+.cliente {
+	margin-top:10px;
+	border: #cdcdcd medium solid;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
 /*--------------------------------------------------------------
 # Top Bar
 --------------------------------------------------------------*/
@@ -245,21 +251,32 @@ h6 {
   color: #fff;
 }
 
+
 #intro .intro-info .btn-get-started:hover,
 #intro .intro-info .btn-services:hover {
   background: #0a98c0;
 }
+.mt-0 {
+  margin-top: 0 !important;
+}
 
-/*--------------------------------------------------------------
-# Navigation Menu
---------------------------------------------------------------*/
+.ml-1 {
+  margin-left: ($spacer * .25) !important;
+}
+
+.px-2 {
+  padding-left: ($spacer * .5) !important;
+  padding-right: ($spacer * .5) !important;
+}
+
+.p-3 {
+  padding: $spacer !important;
+}
+
 
 /* Desktop Navigation */
 
-.main-nav {
-  /* Drop Down */
-  /* Deep Drop Down */
-}
+
 
 .main-nav,
 .main-nav * {

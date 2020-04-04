@@ -12,6 +12,7 @@ import { loadTblRow } from '../Models/IsoModels';
 import { filter } from 'rxjs/operators';
 
 
+
 @Component({
   selector: 'iso-data',
   templateUrl: './iso-charts.component.html',
@@ -20,9 +21,11 @@ import { filter } from 'rxjs/operators';
 })
 export class IsoChartsComponent implements OnChanges, OnInit {
 
-  LMPchartData: Array<Array<Date | number | string>>;
-  LMPStringToChild: string;
-  LMPtitle: string;
+  private LMPchartData: Array<Array<Date | number | string>>;
+  private LMPStringToChild: string;
+  private LMPtitle: string;
+  private width:number;
+  private height:number;
 
   canSendMessage: boolean;
 
@@ -186,7 +189,8 @@ export class IsoChartsComponent implements OnChanges, OnInit {
       })
     });
   }
-
+  
+  
   ngOnChanges(changes: SimpleChanges) {
 
     for (let propName in changes) {

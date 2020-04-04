@@ -33,7 +33,7 @@ import { DashBoardChartComponent } from './dash-board-chart/dash-board-chart.com
 import { GoogleChartService } from './services/google-chart.service';
 import { LoadResolverService } from './services/load-resolver.service';
 
-
+import { AngularResizedEventModule } from 'angular-resize-event';
 
 @NgModule({
   declarations: [
@@ -60,6 +60,7 @@ import { LoadResolverService } from './services/load-resolver.service';
     HttpClientModule,
     FormsModule,
     GoogleChartsModule,
+    AngularResizedEventModule,
     RouterModule.forRoot([
 
       { path: 'home', component: HomeComponent },
