@@ -24,8 +24,8 @@ export class IsoChartsComponent implements OnChanges, OnInit {
   private LMPchartData: Array<Array<Date | number | string>>;
   private LMPStringToChild: string;
   private LMPtitle: string;
-  private width:number;
-  private height:number;
+  private width: number;
+  private height: number;
 
   canSendMessage: boolean;
 
@@ -41,7 +41,7 @@ export class IsoChartsComponent implements OnChanges, OnInit {
 
 
 
-  constructor(private router: Router, private route:ActivatedRoute,
+  constructor(private router: Router, private route: ActivatedRoute,
     private signalrService: SignalrISOdataService,
     private _ngZone: NgZone
   ) {
@@ -65,7 +65,7 @@ export class IsoChartsComponent implements OnChanges, OnInit {
       this.signalrService.sendLMPData(n);
     }
   }
- 
+
   sendfuelTypeData(n) {
     if (this.canSendMessage) {
       this.signalrService.sendfuelTypeData(n);
@@ -73,25 +73,25 @@ export class IsoChartsComponent implements OnChanges, OnInit {
   }
   processLMPData(lmpData: Array<LMP>) {
 
-    let ChartDataPoints: Array<Array<Date | number | string>> = new Array<Array<Date | number | string>>();
+    const ChartDataPoints: Array<Array<Date | number | string>> = new Array<Array<Date | number | string>>();
 
     for (let i = 0; i < lmpData.length; i++) {
       const lmpDate = new Date(lmpData[i].timestamp);
-      let dataPoint: Array<Date | number | string> = new Array<Date | number | string>();
+      const dataPoint: Array<Date | number | string> = new Array<Date | number | string>();
 
       dataPoint.push(lmpDate, lmpData[i].fiveMinuteAvgLMP);
       ChartDataPoints.push(dataPoint);
     }
     return ChartDataPoints;
   }
-  
+
   processfuelTypeData(fuelTypeData: Array<fuelTypeData>) {
-    let ChartDataPoints: Array<Array<Date | number | string>> = new Array<Array<Date | number | string>>();
+    const ChartDataPoints: Array<Array<Date | number | string>> = new Array<Array<Date | number | string>>();
 
     for (let i = 0; i < fuelTypeData.length; i++) {
       const genmixDate = new Date(fuelTypeData[i].timestamp);
-      let dataPoint: Array<Date | number | string> = new Array<Date | number | string>();
-      dataPoint.push(genmixDate, fuelTypeData[i].gas, fuelTypeData[i].nuclear, fuelTypeData[i].coal, fuelTypeData[i].hydro, fuelTypeData[i].wind, fuelTypeData[i].solar, fuelTypeData[i].multipleFuels, fuelTypeData[i].otherRenewables, fuelTypeData[i].oil, fuelTypeData[i].other, fuelTypeData[i].storage)
+      const dataPoint: Array<Date | number | string> = new Array<Date | number | string>();
+      dataPoint.push(genmixDate, fuelTypeData[i].gas, fuelTypeData[i].nuclear, fuelTypeData[i].coal, fuelTypeData[i].hydro, fuelTypeData[i].wind, fuelTypeData[i].solar, fuelTypeData[i].multipleFuels, fuelTypeData[i].otherRenewables, fuelTypeData[i].oil, fuelTypeData[i].other, fuelTypeData[i].storage);
       ChartDataPoints.push(dataPoint);
     }
     return ChartDataPoints;
@@ -150,7 +150,7 @@ export class IsoChartsComponent implements OnChanges, OnInit {
   //   this.getLoadSvc.getLoad()
   //     .subscribe(data => {
 
-        
+
   //       this.PushLoadDataPoints(data);
   //     }, error => console.error(error));
    }
@@ -170,15 +170,15 @@ export class IsoChartsComponent implements OnChanges, OnInit {
         this.LMPStringToChild = 'LMP Data as of ';
         const LMPChartDataPoints = this.processLMPData(data);
         this.PushLMPDataPoints(LMPChartDataPoints);
-      })
+      });
     });
 
     this.signalrService.LoadmessageReceived.subscribe((data: Array<loadTblRow>) => {
       this._ngZone.run(() => {
         this.LoadStringToChild = 'Load Data as of ';
-        //const LoadChartDataPoints = this.processLoadData(data);
-        //this.PushLoadDataPoints(LoadChartDataPoints);
-      })
+        // const LoadChartDataPoints = this.processLoadData(data);
+        // this.PushLoadDataPoints(LoadChartDataPoints);
+      });
     });
 
     this.signalrService.GenmixmessageReceived.subscribe((data: Array<fuelTypeData>) => {
@@ -186,17 +186,17 @@ export class IsoChartsComponent implements OnChanges, OnInit {
         this.GenmixStringToChild = 'Generation Mix as of ';
         const GenmixChartDataPoints = this.processfuelTypeData(data);
         this.PushfuelTypeDataPoints(GenmixChartDataPoints);
-      })
+      });
     });
   }
-  
-  
+
+
   ngOnChanges(changes: SimpleChanges) {
 
-    for (let propName in changes) {
-      let chng = changes[propName];
-      let cur = JSON.stringify(chng.currentValue);
-      let prev = JSON.stringify(chng.previousValue);
+    for (const propName in changes) {
+      const chng = changes[propName];
+      const cur = JSON.stringify(chng.currentValue);
+      const prev = JSON.stringify(chng.previousValue);
 
     }
   }

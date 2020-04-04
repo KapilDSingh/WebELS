@@ -22,4 +22,4 @@ platformBrowserDynamic(providers).bootstrapModule(AppModule, [
   {
     defaultEncapsulation: ViewEncapsulation.None
   }
-]).catch(err => console.log(err));;
+]).catch(err => console.log(err));

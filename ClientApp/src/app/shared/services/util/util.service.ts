@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
  */
 @Injectable()
 export class UtilService {
-  GetMinMaxdate(chartData: import("../../../Models/IsoModels").loadTblRow[]): import("../../../Models/MiscModels").MinMaxDate {
-    throw new Error("Method not implemented.");
+  GetMinMaxdate(chartData: import('../../../Models/IsoModels').loadTblRow[]): import('../../../Models/MiscModels').MinMaxDate {
+    throw new Error('Method not implemented.');
   }
 
   /**

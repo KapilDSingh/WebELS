@@ -53,7 +53,6 @@ import { AngularResizedEventModule } from 'angular-resize-event';
     GenmixChartComponent,
     MeterChartsComponent,
     MeterViewChartComponent,
-    DashBoardChartComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -74,7 +73,7 @@ import { AngularResizedEventModule } from 'angular-resize-event';
         children: [
           {
             path: 'iso-data/app-load-chart',
-            component: LoadChartComponent, 
+            component: LoadChartComponent,
           }
         ]
       },
@@ -82,8 +81,6 @@ import { AngularResizedEventModule } from 'angular-resize-event';
       { path: 'app-meter-charts', component: MeterChartsComponent },
       { path: 'digital-clock', component: DigitalClockComponent },
       { path: 'app-intro', component: IntroComponent },
-      { path: 'app-dash-board-chart', component: DashBoardChartComponent },
-
       { path: 'app-els-chart', component: MainComponent },
       { path: '', redirectTo: '/home', pathMatch: 'full' }
     ],

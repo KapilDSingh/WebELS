@@ -18,7 +18,7 @@ export class MeterChartsComponent implements OnChanges, OnInit {
   MeterStringToChild: string;
   Metertitle: string;
   MeterchartType: string;
-  
+
   canSendMessage: boolean;
 
 
@@ -34,7 +34,7 @@ export class MeterChartsComponent implements OnChanges, OnInit {
     this.router.events.pipe(
       filter((event: RouterEvent) => event instanceof NavigationEnd)
     ).subscribe(() => {
-     
+
 
     });
   }
@@ -47,7 +47,7 @@ export class MeterChartsComponent implements OnChanges, OnInit {
   private subscribeToEvents(): void {
     this.signalrService.connectionEstablished.subscribe(() => {
       this.canSendMessage = true;
-      this.sendMeterData(1000, "550001081");
+      this.sendMeterData(1000, '550001081');
 
     });
 
@@ -58,11 +58,11 @@ export class MeterChartsComponent implements OnChanges, OnInit {
 
         this.MeterStringToChild = 'Consumption as of ';
         const MeterchartDataPoints = this.processMeterData(data);
-        this.Metertitle = "Consumption Data"
+        this.Metertitle = 'Consumption Data';
 
 
         this.PushMeterDataPoints(MeterchartDataPoints);
-      })
+      });
     });
   }
   private PushMeterDataPoints(ChartDataPoints: Array<Array<Date | number | string>>) {
@@ -80,27 +80,27 @@ export class MeterChartsComponent implements OnChanges, OnInit {
 
     }
     this.MeterStringToChild = this.MeterStringToChild + this.MeterchartData[this.MeterchartData.length - 1][0].toString();
-    this.MeterchartType= 'AreaChart';
+    this.MeterchartType = 'AreaChart';
   }
   processMeterData(meterData: Array<MeterData>) {
 
-    let ChartDataPoints: Array<Array<Date | number | string>> = new Array<Array<Date | number | string>>();
+    const ChartDataPoints: Array<Array<Date | number | string>> = new Array<Array<Date | number | string>>();
 
     for (let i = 0; i < meterData.length; i++) {
       const lmpDate = new Date(meterData[i].timestamp);
-      let dataPoint: Array<Date | number | string> = new Array<Date | number | string>();
+      const dataPoint: Array<Date | number | string> = new Array<Date | number | string>();
 
-      dataPoint.push(lmpDate,meterData[i].kWhTot);
+      dataPoint.push(lmpDate, meterData[i].kWhTot);
       ChartDataPoints.push(dataPoint);
     }
     return ChartDataPoints;
   }
   ngOnChanges(changes: SimpleChanges) {
 
-    for (let propName in changes) {
-      let chng = changes[propName];
-      let cur = JSON.stringify(chng.currentValue);
-      let prev = JSON.stringify(chng.previousValue);
+    for (const propName in changes) {
+      const chng = changes[propName];
+      const cur = JSON.stringify(chng.currentValue);
+      const prev = JSON.stringify(chng.previousValue);
 
     }
   }

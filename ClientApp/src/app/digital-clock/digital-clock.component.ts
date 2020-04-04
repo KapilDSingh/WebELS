@@ -37,7 +37,7 @@ export class DigitalClockComponent implements OnInit, OnDestroy {
    * @type: boolean
    */
   @Input()
-  public displayDots: boolean = false;
+  public displayDots = false;
   /**
    * @public
    * @type: string[]
@@ -89,7 +89,7 @@ export class DigitalClockComponent implements OnInit, OnDestroy {
     const t: string[] = now.toLocaleTimeString().split(' ');
 
     if (Array.isArray(t) && t[0]) {
-      let digits: any = t[0]
+      const digits: any = t[0]
         .split(':')
         .map(v => this.util.to2Digit(v))
         .join(':')
@@ -136,7 +136,7 @@ export class DigitalClockComponent implements OnInit, OnDestroy {
    * @description: N/A
    */
   public ngOnDestroy(): void {
-    for (let subscription of this.subscriptions) {
+    for (const subscription of this.subscriptions) {
       if (!!subscription) {
         subscription.unsubscribe();
       }

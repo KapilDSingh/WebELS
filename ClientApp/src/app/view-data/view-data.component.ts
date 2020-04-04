@@ -13,6 +13,10 @@ import { DatePipe } from '@angular/common';
   styles: [':host > *:not(h1) { display: inline-block !important; }']
 })
 export class ViewDataComponent implements OnInit, OnChanges {
+  constructor(
+    private router: Router
+  ) {
+  }
   @Input() StringToChild: string;
   @Input() chartData: Array<Array<Date | number | string>>;
   @Input() chartType: string;
@@ -24,7 +28,10 @@ export class ViewDataComponent implements OnInit, OnChanges {
     roles: Array<{ type: string, role: string }>,
     columnNames?: Array<string>,
     options?: {}
-  }
+  };
+
+  @ViewChild('chart', { static: true })
+  chart: GoogleChartComponent;
 
   public drawLMPChart() {
     this.LMPChart = {
@@ -54,13 +61,6 @@ export class ViewDataComponent implements OnInit, OnChanges {
     };
   }
 
-  @ViewChild('chart', { static: true })
-  chart: GoogleChartComponent;
-  constructor(
-    private router: Router
-  ) {
-  }
-
 
   onReady() {
     console.log('Chart ready');
@@ -88,10 +88,10 @@ export class ViewDataComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     this.drawLMPChart();
-    for (let propName in changes) {
-      let chng = changes[propName];
-      let cur = JSON.stringify(chng.currentValue);
-      let prev = JSON.stringify(chng.previousValue);
+    for (const propName in changes) {
+      const chng = changes[propName];
+      const cur = JSON.stringify(chng.currentValue);
+      const prev = JSON.stringify(chng.previousValue);
 
     }
   }

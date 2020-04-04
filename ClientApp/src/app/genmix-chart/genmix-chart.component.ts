@@ -11,8 +11,12 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./genmix-chart.component.css']
 })
 export class GenmixChartComponent implements OnInit, OnChanges  {
+  constructor(
+    private router: Router
+  ) {
+  }
 
- 
+
   @Input() StringToChild: string;
   @Input() chartData: Array<Array<Date | number | string>>;
   @Input() chartType: string;
@@ -24,41 +28,37 @@ export class GenmixChartComponent implements OnInit, OnChanges  {
     roles: Array<{ type: string, role: string }>,
     columnNames?: Array<string>,
     options?: {}
-  }
-  
+  };
+
+  @ViewChild('chart', { static: false })   chart: GoogleChartComponent;
+
   public drawGenmixChart() {
     this.GenmixChart = {
       title: this.StringToChild,
       type: 'AreaChart',
       data: this.chartData,
-      columnNames: ['timestamp','Gas', 'Nuclear', 'Coal','Hydro','Wind','Solar','Multiple Fuels', 'Other Renewables','Oil','Other', 'Storage'],
+      columnNames: ['timestamp', 'Gas', 'Nuclear', 'Coal', 'Hydro', 'Wind', 'Solar', 'Multiple Fuels', 'Other Renewables', 'Oil', 'Other', 'Storage'],
       roles: [],
       options: {
         isStacked: 'percent',
-        vAxis: {title: 'Generation Mix', ['format']:'percent'},
+        vAxis: {title: 'Generation Mix', ['format']: 'percent'},
         hAxis: {title: 'Time'},
-        
-        
-       legend:{position:'bottom', maxLines: 4},
+
+
+       legend: {position: 'bottom', maxLines: 4},
        backgroundColor: '#f5f8fd',
        titleTextStyle: {
         color: 'black',    // any HTML string color ('red', '#cc00cc')
         fontName: 'Monteserrat', // i.e. 'Times New Roman'
         fontSize: 20, // 12, 18 whatever you want (don't specify px)
         bold: false,    // true or false
-        italic:true   // true of false
+        italic: true   // true of false
     }
       },
     };
   }
-
-  @ViewChild('chart', { static: false })   chart: GoogleChartComponent;
-  constructor(
-    private router: Router
-  ) {
-  }
   ngAfterViewInit() {
-    console.log("Hello ", this.chart.data);
+    console.log('Hello ', this.chart.data);
  }
 
   onReady() {
@@ -87,10 +87,10 @@ export class GenmixChartComponent implements OnInit, OnChanges  {
 
   ngOnChanges(changes: SimpleChanges) {
     this.drawGenmixChart();
-    for (let propName in changes) {
-      let chng = changes[propName];
-      let cur = JSON.stringify(chng.currentValue);
-      let prev = JSON.stringify(chng.previousValue);
+    for (const propName in changes) {
+      const chng = changes[propName];
+      const cur = JSON.stringify(chng.currentValue);
+      const prev = JSON.stringify(chng.previousValue);
 
     }
   }

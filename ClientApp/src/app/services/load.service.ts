@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-//import { loadTblRow } from '../Models/IsoModels';
+// import { loadTblRow } from '../Models/IsoModels';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -11,15 +11,14 @@ import { loadTblRow } from '../Models/IsoModels';
 })
 export class LoadService {
 
-  constructor(private http: HttpClient) 
-  {  }
+  constructor(private http: HttpClient) {  }
 
   getLoad (): Observable<Array<loadTblRow>> {
     return this.http.get<Array<loadTblRow>>('http://localhost:33383/api/loadTbls')
     .pipe
     (
       catchError(this.handleError<loadTblRow[]>('getLoad', []))
-    )
+    );
   }
 
   /**

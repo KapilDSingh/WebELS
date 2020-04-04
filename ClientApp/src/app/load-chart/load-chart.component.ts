@@ -20,6 +20,17 @@ import { filter } from 'rxjs/operators';
 })
 export class LoadChartComponent implements OnInit {
 
+
+  constructor(private gChartService: GoogleChartService, private route: ActivatedRoute,
+    private signalrService: SignalrISOdataService, private _ngZone: NgZone, private miscSvc: MiscService) {
+    this.gLib = this.gChartService.getGoogle();
+    this.gLib.charts.load('current', { 'packages': ['corechart', 'table', 'controls'] });
+    this.gLib.charts.setOnLoadCallback(this.drawLoadChart.bind(this));
+    route.params.subscribe(val => {
+      this.chartData = this.route.snapshot.data.LoadData;
+    });
+  }
+
   chartData = new Array<loadTblRow>();
 
   private gLib: any;
@@ -32,26 +43,6 @@ export class LoadChartComponent implements OnInit {
   private width: number;
   private height: number;
 
-
-  constructor(private gChartService: GoogleChartService, private route: ActivatedRoute,
-    private signalrService: SignalrISOdataService, private _ngZone: NgZone, private miscSvc: MiscService) {
-    this.gLib = this.gChartService.getGoogle();
-    this.gLib.charts.load('current', { 'packages': ['corechart', 'table', 'controls'] });
-    this.gLib.charts.setOnLoadCallback(this.drawLoadChart.bind(this));
-    route.params.subscribe(val => {
-      this.chartData = this.route.snapshot.data.LoadData;
-    });
-  }
-
-  ngOnInit() {
-    this.chartData = this.route.snapshot.data.LoadData;
-    this.signalrService.LoadmessageReceived.subscribe((data: loadTblRow) => {
-      this._ngZone.run(() => {
-        this.updateLoadChart(data);
-      })
-    });
-  }
-
   private options = {
 
     seriesType: 'line',
@@ -61,7 +52,7 @@ export class LoadChartComponent implements OnInit {
     legend: {
       position: 'none'
     },
-    //backgroundColor: 'white',
+    // backgroundColor: 'white',
     titleTextStyle: {
       color: 'black',    // any HTML string color ('red', '#cc00cc')
       fontName: 'Helvetica', // i.e. 'Times New Roman'
@@ -73,6 +64,15 @@ export class LoadChartComponent implements OnInit {
     crosshair: { trigger: 'both' },
     curveType: 'function',
   };
+
+  ngOnInit() {
+    this.chartData = this.route.snapshot.data.LoadData;
+    this.signalrService.LoadmessageReceived.subscribe((data: loadTblRow) => {
+      this._ngZone.run(() => {
+        this.updateLoadChart(data);
+      });
+    });
+  }
 
   // }
   private drawLoadChart(options) {
@@ -86,20 +86,19 @@ export class LoadChartComponent implements OnInit {
     this.loadTable.addColumn({ type: 'boolean', role: 'certainty' });
 
     for (let i = 0; i < this.chartData.length; i++) {
-      var chartRow = new Array<Date | number | string | Boolean>();
-      var date = new Date(this.chartData[i].timestamp);
+      const chartRow = new Array<Date | number | string | Boolean>();
+      const date = new Date(this.chartData[i].timestamp);
 
       chartRow.push(date);
       chartRow.push(this.chartData[i].instantaneous_Load);
-      var day = date.getDay();
+      const day = date.getDay();
       if (day > 0 && day < 6) {
         chartRow.push('opacity: 0.9;' +
           'stroke-width: .8;' +
           'stroke-color: red;' +
           'fill-color: #fff600');
         chartRow.push(true);
-      }
-      else {
+      } else {
 
         chartRow.push('opacity: 0.9;' +
           'stroke-width: .1;' +
@@ -115,7 +114,7 @@ export class LoadChartComponent implements OnInit {
 
     this.minMaxDate = this.miscSvc.GetMinMaxdate(this.chartData);
     // Create a dashboard.
-    var dash_container = document.getElementById('dashboard_div');
+    const dash_container = document.getElementById('dashboard_div');
 
     this.loadDashboard = new this.gLib.visualization.Dashboard(dash_container);
 
@@ -132,21 +131,21 @@ export class LoadChartComponent implements OnInit {
           'chartOptions': {
             'chartArea': { 'width': '80%' },
             'hAxis': { 'baselineColor': 'none' },
-            //colors: ['red'],
-            //backgroundColor: '#f5f8fd',
+            // colors: ['red'],
+            // backgroundColor: '#f5f8fd',
           },
         },
 
         'state': { 'range': { 'start': this.minMaxDate.MinDate, 'end': this.minMaxDate.MaxDate } }
       }
     });
-    
-    var date_formatter = new google.visualization.DateFormat({
-      pattern: "MMM dd, yyyy,  h:mm aa "
+
+    const date_formatter = new google.visualization.DateFormat({
+      pattern: 'MMM dd, yyyy,  h:mm aa '
     });
     date_formatter.format(this.loadTable, 0);  // Where 0 is the index of the column
 
-    var formatter = new google.visualization.NumberFormat(
+    const formatter = new google.visualization.NumberFormat(
       { suffix: ' MWH', pattern: '#,###' });
 
     formatter.format(this.loadTable, 1); // Apply formatter to second column
@@ -172,18 +171,17 @@ export class LoadChartComponent implements OnInit {
   private updateLoadChart(data: loadTblRow) {
     this.chartData.push(data);
 
-    this.chartTitle = 'Load Data as of ' + new Date(data.timestamp).toLocaleTimeString('en-US')+ ' (EST)';
+    this.chartTitle = 'Load Data as of ' + new Date(data.timestamp).toLocaleTimeString('en-US') + ' (EST)';
 
-    var chartRow = new Array<Date | number | string | Boolean>();
-    var date = new Date(data.timestamp);
+    const chartRow = new Array<Date | number | string | Boolean>();
+    const date = new Date(data.timestamp);
     chartRow.push(new Date(data.timestamp));
     chartRow.push(data.instantaneous_Load);
-    var day = date.getDay();
+    const day = date.getDay();
     if (day > 0 && day < 6) {
       chartRow.push('color:#00f9ff');
       chartRow.push(true);
-    }
-    else {
+    } else {
 
       chartRow.push('opacity: 0.1;' +
         'stroke-width: 5;' +
@@ -194,12 +192,12 @@ export class LoadChartComponent implements OnInit {
 
     if (this.loadDashboard != undefined) {
       this.loadTable.addRow(chartRow);
-      var date_formatter = new google.visualization.DateFormat({
-        pattern: "MMM dd, yyyy,  h:mm aa"
+      const date_formatter = new google.visualization.DateFormat({
+        pattern: 'MMM dd, yyyy,  h:mm aa'
       });
       date_formatter.format(this.loadTable, 0);  // Where 0 is the index of the column
 
-      var formatter = new google.visualization.NumberFormat(
+      const formatter = new google.visualization.NumberFormat(
         { suffix: ' MWH', pattern: '#,###' });
 
       formatter.format(this.loadTable, 1); // Apply formatter to second column

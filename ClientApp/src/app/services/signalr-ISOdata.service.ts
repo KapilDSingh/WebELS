@@ -8,13 +8,13 @@ import { MeterData } from '../Models/MeterModel';
 @Injectable()
 export class SignalrISOdataService implements OnInit, OnChanges  {
   connectionEstablished = new EventEmitter<Boolean>();
-  
+
   LMPmessageReceived = new EventEmitter<Array<LMP>>();
-  
+
   LoadmessageReceived = new EventEmitter<Array<loadTblRow>>();
 
   GenmixmessageReceived = new EventEmitter<Array<fuelTypeData>>();
- 
+
   MeterDataMessageReceived = new EventEmitter<Array<MeterData>>();
 
   public connectionIsEstablished = false;
@@ -66,7 +66,7 @@ export class SignalrISOdataService implements OnInit, OnChanges  {
     this._hubConnection.on('ReceiveLoad', (data: any) => {
       this.LoadmessageReceived.emit(data);
     });
-    
+
     this._hubConnection.on('ReceiveGenmix', (data: any) => {
       this.GenmixmessageReceived.emit(data);
     });
@@ -80,11 +80,11 @@ export class SignalrISOdataService implements OnInit, OnChanges  {
   }
   ngOnChanges(changes: SimpleChanges) {
 
-    for (let propName in changes) {
-      let chng = changes[propName];
-      let cur  = JSON.stringify(chng.currentValue);
-      let prev = JSON.stringify(chng.previousValue);
-      
+    for (const propName in changes) {
+      const chng = changes[propName];
+      const cur  = JSON.stringify(chng.currentValue);
+      const prev = JSON.stringify(chng.previousValue);
+
     }
   }
 }

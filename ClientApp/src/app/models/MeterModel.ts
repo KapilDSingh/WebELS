@@ -1,6 +1,5 @@
-export class MeterData
-{
-    
+export class MeterData {
+
     public  meterId: string;
     public  timestamp: Date;
     public kWhTot: number;
@@ -14,6 +13,6 @@ export class MeterData
     public powerFactorLn1: number;
     public powerFactorLn2: number;
     public powerFactorLn3: number;
-        
+
 }
-    
+
