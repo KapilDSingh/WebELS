@@ -5,13 +5,22 @@
   resize: both;
   overflow: auto;
 } */
+.cliente {
+	margin-top:10px;
+	border: #cdcdcd medium solid;
+  border-radius: 0px;
+  background-color: white;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+}
 .chart {
   width: 100%; 
   min-height: 800px;
 }
 .row {
   margin:0 !important;
-}.custom-about {
+}
+.custom-about {
     
     width: 100%;
     height: auto;

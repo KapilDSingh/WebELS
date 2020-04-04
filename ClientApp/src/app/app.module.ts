@@ -70,6 +70,7 @@ import { AngularResizedEventModule } from 'angular-resize-event';
       {
         path: 'iso-data', component: IsoChartsComponent,
         resolve: { LoadData: LoadResolverService },
+        runGuardsAndResolvers: 'always',
         children: [
           {
             path: 'iso-data/app-load-chart',

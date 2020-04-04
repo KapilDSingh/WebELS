@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, NgZone } from '@angular/core';
 import { ChartErrorEvent, ChartEvent, GoogleChartComponent } from '../../../projects/angular-google-charts/src/public_api';
 import { GoogleChartService } from '../services/google-chart.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterEvent, NavigationEnd } from '@angular/router';
 import { loadTblRow } from '../Models/IsoModels';
 import { DatePipe } from '@angular/common';
 import { MinMaxDate } from '../Models/MiscModels';
@@ -10,6 +10,7 @@ import { SignalrISOdataService } from '../services/signalr-ISOdata.service';
 import { MiscService } from '../services/misc.service';
 import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
 import { ResizedEvent } from 'angular-resize-event';
+import { filter } from 'rxjs/operators';
 
 
 @Component({
@@ -37,6 +38,9 @@ export class LoadChartComponent implements OnInit {
     this.gLib = this.gChartService.getGoogle();
     this.gLib.charts.load('current', { 'packages': ['corechart', 'table', 'controls'] });
     this.gLib.charts.setOnLoadCallback(this.drawLoadChart.bind(this));
+    route.params.subscribe(val => {
+      this.chartData = this.route.snapshot.data.LoadData;
+    });
   }
 
   ngOnInit() {
@@ -50,22 +54,22 @@ export class LoadChartComponent implements OnInit {
 
   private options = {
 
-    seriesType: 'area',
+    seriesType: 'line',
     vAxis: { title: 'MwH' },
 
-    colors: ['#00f9ff', 'red'],
+    colors: ['black'],
     legend: {
       position: 'none'
     },
-    backgroundColor: '#f5f8fd',
+    //backgroundColor: 'white',
     titleTextStyle: {
       color: 'black',    // any HTML string color ('red', '#cc00cc')
-      fontName: 'Monteserrat', // i.e. 'Times New Roman'
-      fontSize: 20, // 12, 18 whatever you want (don't specify px)
-      bold: false,    // true or false
-      italic: true   // true of false
+      fontName: 'Helvetica', // i.e. 'Times New Roman'
+      fontSize: 16, // 12, 18 whatever you want (don't specify px)
+      bold: true,    // true or false
+      italic: false,   // true of false
     },
-    chartArea: { width: '90%', height: '80%' },
+    chartArea: { width: '80%', height: '70%' },
     crosshair: { trigger: 'both' },
     curveType: 'function',
   };
@@ -89,21 +93,26 @@ export class LoadChartComponent implements OnInit {
       chartRow.push(this.chartData[i].instantaneous_Load);
       var day = date.getDay();
       if (day > 0 && day < 6) {
-        chartRow.push('color:#00f9ff');
+        chartRow.push('opacity: 0.9;' +
+          'stroke-width: .8;' +
+          'stroke-color: red;' +
+          'fill-color: #fff600');
         chartRow.push(true);
       }
       else {
 
-        chartRow.push('opacity: 0.1;' +
-          'stroke-width: 5;' +
-          'stroke-color: #01a0ff;' +
+        chartRow.push('opacity: 0.9;' +
+          'stroke-width: .1;' +
+          'stroke-color: red;' +
           'fill-color: #fff600');
         chartRow.push(false);
       }
 
       this.loadTable.addRow(chartRow);
     }
-    this.chartTitle = 'Load Data as of ' + new Date(this.chartData[this.chartData.length - 1].timestamp).toString();
+
+    this.chartTitle = 'Load Data as of '  + new Date(this.chartData[this.chartData.length - 1].timestamp).toLocaleTimeString() + ' (EST)';
+
     this.minMaxDate = this.miscSvc.GetMinMaxdate(this.chartData);
     // Create a dashboard.
     var dash_container = document.getElementById('dashboard_div');
@@ -121,10 +130,10 @@ export class LoadChartComponent implements OnInit {
         'ui': {
           'chartType': 'LineChart',
           'chartOptions': {
-            'chartArea': { 'width': '90%' },
+            'chartArea': { 'width': '80%' },
             'hAxis': { 'baselineColor': 'none' },
-            colors: ['grey'],
-            backgroundColor: '#f5f8fd',
+            //colors: ['red'],
+            //backgroundColor: '#f5f8fd',
           },
         },
 
@@ -163,7 +172,7 @@ export class LoadChartComponent implements OnInit {
   private updateLoadChart(data: loadTblRow) {
     this.chartData.push(data);
 
-    this.chartTitle = 'Load Data as of ' + new Date(data.timestamp).toString();
+    this.chartTitle = 'Load Data as of ' + new Date(data.timestamp).toLocaleTimeString('en-US')+ ' (EST)';
 
     var chartRow = new Array<Date | number | string | Boolean>();
     var date = new Date(data.timestamp);
