@@ -6,6 +6,5 @@ namespace WebELS.Repository
     public interface ILMPRepository
     {
         List<lmpTbl> LMPdata { get; set; }
-        List<lmpTbl> GetLMP(int n);
     }
 }

@@ -112,12 +112,11 @@ namespace WebELS.SqlTableDependencies
         {
             if (e.ChangeType != ChangeType.None)
             {
-                List<lmpTbl> data = new List<lmpTbl>();
+                lmpDataRow lmpData = new lmpDataRow();
+                lmpData.timestamp = e.Entity.timestamp;
+                lmpData.Interval5MinLMP= e.Entity._5_Minute_Weighted_Avg__LMP;
 
-                data.Add(e.Entity);
-                // _LMPrepository.LMPdata = _LMPrepository.GetLMP(1);
-                _hubContext.Clients.All.SendAsync("ReceiveLMP", data);
-
+                _hubContext.Clients.All.SendAsync("ReceiveLMP", lmpData);
             }
         }
         private void LoadChanged(object sender, RecordChangedEventArgs<loadTbl> e)
@@ -130,7 +129,6 @@ namespace WebELS.SqlTableDependencies
                 loadData.Instantaneous_Load = e.Entity.Instantaneous_Load; ;
 
                 _hubContext.Clients.All.SendAsync("ReceiveLoad", loadData);
-
             }
         }
 
@@ -175,6 +173,7 @@ namespace WebELS.SqlTableDependencies
                     _LMPtableDependency.Stop();
                     _LoadTableDependency.Stop();
                     _GenFueltableDependency.Stop();
+                    _MeterTableDependency.Stop();
                 }
 
                 _disposedValue = true;

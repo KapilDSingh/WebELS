@@ -28,4 +28,18 @@ namespace WebELS.Models
         [JsonProperty("timestamp")]
         public DateTime timestamp { get; set; }
     }
+   
+    public class lmpDataRow
+    {
+        [JsonProperty("timestamp")]
+        [Column("timestamp", TypeName = "datetime")]
+        public DateTime timestamp { get; set; }
+
+        [JsonProperty("fiveMinuteAvgLMP")]
+        [Column("5 Minute Weighted Avg. LMP")]
+        public double Interval5MinLMP { get; set; }
+
+        
+    }
 }
+

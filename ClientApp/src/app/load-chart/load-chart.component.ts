@@ -10,7 +10,8 @@ import { SignalrISOdataService } from '../services/signalr-ISOdata.service';
 import { MiscService } from '../services/misc.service';
 import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
 import { ResizedEvent } from 'angular-resize-event';
-import { filter } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 
 @Component({
@@ -20,19 +21,7 @@ import { filter } from 'rxjs/operators';
 })
 export class LoadChartComponent implements OnInit {
 
-
-  constructor(private gChartService: GoogleChartService, private route: ActivatedRoute,
-    private signalrService: SignalrISOdataService, private _ngZone: NgZone, private miscSvc: MiscService) {
-    this.gLib = this.gChartService.getGoogle();
-    this.gLib.charts.load('current', { 'packages': ['corechart', 'table', 'controls'] });
-    this.gLib.charts.setOnLoadCallback(this.drawLoadChart.bind(this));
-    route.params.subscribe(val => {
-      this.chartData = this.route.snapshot.data.LoadData;
-    });
-  }
-
-  chartData = new Array<loadTblRow>();
-
+  public destroyed = new Subject<any>();
   private gLib: any;
   private minMaxDate: MinMaxDate;
   private loadTable: any;
@@ -42,42 +31,106 @@ export class LoadChartComponent implements OnInit {
   private loadDateSlider: any;
   private width: number;
   private height: number;
+  private controlOptions: any;
+
+  constructor(private gChartService: GoogleChartService, private route: ActivatedRoute,
+    private signalrService: SignalrISOdataService, private _ngZone: NgZone, private miscSvc: MiscService) {
+    this.gLib = this.gChartService.getGoogle();
+    this.gLib.charts.load('current', { 'packages': ['corechart', 'table', 'controls'] });
+    this.gLib.charts.setOnLoadCallback(this.drawLoadChart.bind(this));
+    route.params.pipe(
+      takeUntil(this.destroyed)
+    ).subscribe(val => {
+      this.chartData = this.route.snapshot.data.LoadData;
+    });
+  }
+
+  private chartData = new Array<loadTblRow>();
 
   private options = {
+    series: {
+      0: {
+        seriesType: 'line',
+        color: 'black',
+      }
+    },
 
-    seriesType: 'line',
-    vAxis: { title: 'MwH' },
-
+    vAxis: { title: 'MwH', textStyle: { fontSize: '12' }, format: 'short' },
+    hAxis: { textStyle: { fontSize: '12' }, format: 'MMMM d' },
     colors: ['black'],
     legend: {
       position: 'none'
     },
-    // backgroundColor: 'white',
+
     titleTextStyle: {
       color: 'black',    // any HTML string color ('red', '#cc00cc')
-      fontName: 'Helvetica', // i.e. 'Times New Roman'
-      fontSize: 16, // 12, 18 whatever you want (don't specify px)
-      bold: true,    // true or false
-      italic: false,   // true of false
+      fontName: 'Montesserat', // i.e. 'Times New Roman'
+      fontSize: '18', // 12, 18 whatever you want (don't specify px)
+      bold: false,    // true or false
+      italic: true,   // true of false
     },
     chartArea: { width: '80%', height: '70%' },
     crosshair: { trigger: 'both' },
     curveType: 'function',
-  };
+    lineWidth: 1,
+    lineColor: 'black',
 
+  };
+  setFilterOptions() {
+    this.controlOptions = {
+      // Filter by the date axis.
+      'filterColumnIndex': 0,
+      ui: {
+        'chartType': 'lineChart',
+
+        'chartOptions': {
+          chartArea: { width: '80%', height: '90%' },
+          hAxis: { textStyle: { fontSize: '12' }, format: 'MMMM d' },
+          'color': 'black',
+          'lineWidth': '1',
+          opacity:1,
+        },
+      },
+
+      //     'state': { 'range': { 'start': this.minMaxDate.MinDate, 'end': this.minMaxDate.MaxDate } }
+    }
+  }
   ngOnInit() {
     this.chartData = this.route.snapshot.data.LoadData;
-    this.signalrService.LoadmessageReceived.subscribe((data: loadTblRow) => {
-      this._ngZone.run(() => {
-        this.updateLoadChart(data);
+
+    this.signalrService.LoadmessageReceived
+      .pipe(takeUntil(this.destroyed))
+      .subscribe((data) => {
+        this._ngZone.run(() => {
+          this.updateLoadChart(data);
+        });
       });
-    });
+  }
+  formatAxes()
+  {
+  const date_formatter = new google.visualization.DateFormat({pattern: 'MMM dd, yyyy,  h:mm aa' });
+      date_formatter.format(this.loadTable, 0);  // Where 0 is the index of the column
+
+      const formatter = new google.visualization.NumberFormat({ suffix: ' MWH', pattern: '#,###' });
+      formatter.format(this.loadTable, 1); // Apply formatter to second column
   }
 
-  // }
-  private drawLoadChart(options) {
+
+  setConditionalFormat(day: number, chartRow:Array<Date | number | string | Boolean>):Array<Date | number | string | Boolean> {
+    if (day > 0 && day < 6) {
+      chartRow.push('color: red;');
+      chartRow.push(true);
+    } else 
+    {
+      chartRow.push('color: black;');
+      chartRow.push(false);  
+    }
+    return chartRow;
+  }
 
 
+  private drawLoadChart(options) 
+  {
     // Create the dataset (DataTable)
     this.loadTable = new google.visualization.DataTable();
     this.loadTable.addColumn('date', 'Date');
@@ -86,31 +139,18 @@ export class LoadChartComponent implements OnInit {
     this.loadTable.addColumn({ type: 'boolean', role: 'certainty' });
 
     for (let i = 0; i < this.chartData.length; i++) {
-      const chartRow = new Array<Date | number | string | Boolean>();
+      let chartRow = new Array<Date | number | string | Boolean>();
       const date = new Date(this.chartData[i].timestamp);
 
       chartRow.push(date);
       chartRow.push(this.chartData[i].instantaneous_Load);
+      
       const day = date.getDay();
-      if (day > 0 && day < 6) {
-        chartRow.push('opacity: 0.9;' +
-          'stroke-width: .8;' +
-          'stroke-color: red;' +
-          'fill-color: #fff600');
-        chartRow.push(true);
-      } else {
-
-        chartRow.push('opacity: 0.9;' +
-          'stroke-width: .1;' +
-          'stroke-color: red;' +
-          'fill-color: #fff600');
-        chartRow.push(false);
-      }
-
+      chartRow = this.setConditionalFormat(day, chartRow);
+      
       this.loadTable.addRow(chartRow);
     }
-
-    this.chartTitle = 'Load Data as of '  + new Date(this.chartData[this.chartData.length - 1].timestamp).toLocaleTimeString() + ' (EST)';
+    this.chartTitle = 'Load Data as of ' + new Date(this.chartData[this.chartData.length - 1].timestamp).toLocaleTimeString() + ' (EST)';
 
     this.minMaxDate = this.miscSvc.GetMinMaxdate(this.chartData);
     // Create a dashboard.
@@ -118,38 +158,15 @@ export class LoadChartComponent implements OnInit {
 
     this.loadDashboard = new this.gLib.visualization.Dashboard(dash_container);
 
-
     // Create a date range slider
     this.loadDateSlider = new this.gLib.visualization.ControlWrapper({
       'controlType': 'ChartRangeFilter',
       'containerId': 'control_div',
-      'options': {
-        // Filter by the date axis.
-        'filterColumnIndex': 0,
-        'ui': {
-          'chartType': 'LineChart',
-          'chartOptions': {
-            'chartArea': { 'width': '80%' },
-            'hAxis': { 'baselineColor': 'none' },
-            // colors: ['red'],
-            // backgroundColor: '#f5f8fd',
-          },
-        },
-
-        'state': { 'range': { 'start': this.minMaxDate.MinDate, 'end': this.minMaxDate.MaxDate } }
-      }
     });
+    this.setFilterOptions();
+    this.loadDateSlider.setOptions(this.controlOptions);
 
-    const date_formatter = new google.visualization.DateFormat({
-      pattern: 'MMM dd, yyyy,  h:mm aa '
-    });
-    date_formatter.format(this.loadTable, 0);  // Where 0 is the index of the column
-
-    const formatter = new google.visualization.NumberFormat(
-      { suffix: ' MWH', pattern: '#,###' });
-
-    formatter.format(this.loadTable, 1); // Apply formatter to second column
-
+    this.formatAxes();
 
     // Line chart visualization
     this.loadLine = new google.visualization.ChartWrapper({
@@ -160,51 +177,31 @@ export class LoadChartComponent implements OnInit {
     });
     this.loadLine.setOption('title', this.chartTitle);
     // Bind loadLine to the dashboard, and to the controls
-    // this will make sure our line chart is update when our date changes
+    // this will make sure our line chart is updated when our date changes
     this.loadDashboard.bind(this.loadDateSlider, this.loadLine);
 
     this.loadDashboard.draw(this.loadTable);
   }
 
-
-
-  private updateLoadChart(data: loadTblRow) {
+  private updateLoadChart(data: loadTblRow) 
+  {
     this.chartData.push(data);
-
     this.chartTitle = 'Load Data as of ' + new Date(data.timestamp).toLocaleTimeString('en-US') + ' (EST)';
 
-    const chartRow = new Array<Date | number | string | Boolean>();
+    let chartRow = new Array<Date | number | string | Boolean>();
     const date = new Date(data.timestamp);
-    chartRow.push(new Date(data.timestamp));
+    chartRow.push(date);
     chartRow.push(data.instantaneous_Load);
     const day = date.getDay();
-    if (day > 0 && day < 6) {
-      chartRow.push('color:#00f9ff');
-      chartRow.push(true);
-    } else {
 
-      chartRow.push('opacity: 0.1;' +
-        'stroke-width: 5;' +
-        'stroke-color: #01a0ff;' +
-        'fill-color: #fff600');
-      chartRow.push(false);
-    }
-
-    if (this.loadDashboard != undefined) {
+    if (this.loadDashboard != undefined) 
+    {
+      chartRow = this.setConditionalFormat(day, chartRow);
       this.loadTable.addRow(chartRow);
-      const date_formatter = new google.visualization.DateFormat({
-        pattern: 'MMM dd, yyyy,  h:mm aa'
-      });
-      date_formatter.format(this.loadTable, 0);  // Where 0 is the index of the column
-
-      const formatter = new google.visualization.NumberFormat(
-        { suffix: ' MWH', pattern: '#,###' });
-
-      formatter.format(this.loadTable, 1); // Apply formatter to second column
-
       this.loadLine.setOption('title', this.chartTitle);
-      this.loadDashboard.draw(this.loadTable);
 
+      this.formatAxes();
+      this.loadDashboard.draw(this.loadTable);
     }
   }
   onResized(event: ResizedEvent) {
@@ -221,4 +218,9 @@ export class LoadChartComponent implements OnInit {
     }
 
   }
+  ngOnDestroy(): void {
+    this.destroyed.next();
+    this.destroyed.complete();
+  }
 }
+

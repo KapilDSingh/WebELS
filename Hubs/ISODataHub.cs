@@ -21,16 +21,7 @@ namespace WebELS.Hubs
              _MeterRepository = MeterRepository;
         }
 
-        public async Task SendLMP(int n)
-        {
-            List<lmpTbl> data = _LMPrepository.GetLMP(n);
-            await this.Clients.All.SendAsync("ReceiveLMP", data);
-        }
-        public async Task SendLoad(int n)
-        {
-            List<loadTbl> data = _Loadrepository.GetLoad(n);
-            await this.Clients.All.SendAsync("ReceiveLoad", data);
-        }
+        
         public async Task SendGenmix(int n)
         {
             List<fuelTypeData> data = _FuelTyperepository.GetFuelType(n);

@@ -22,9 +22,14 @@ namespace WebELS.Controllers
 
         // GET: api/lmpTbls
         [HttpGet]
-        public IEnumerable<lmpTbl> GetlmpTbl()
+        public IEnumerable<lmpDataRow> GetLmp()
         {
-            return _context().lmpTbl;
+            List<lmpDataRow> lmpData;
+            using (var context = _context.Invoke())
+            {
+                lmpData = (from x in context.lmpTbl where x.node_id == "PSEG" && x.Type == "ZONE" orderby x.timestamp ascending select new lmpDataRow { timestamp = x.timestamp, Interval5MinLMP = x._5_Minute_Weighted_Avg__LMP }).Take(100000).ToList();
+                return lmpData;
+            }
         }
 
         // GET: api/lmpTbls/5

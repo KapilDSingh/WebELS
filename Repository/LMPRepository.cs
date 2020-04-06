@@ -26,17 +26,5 @@ namespace WebELS.Repository
 
 
         }
-        public List<lmpTbl> GetLMP(int n)
-        {
-            using (var context = _contextFactory.Invoke())
-            {
-                LMPdata = (from x in context.lmpTbl where x.node_id == "PSEG"  && x.Type == "ZONE" orderby x.timestamp descending select x).Take(n).ToList();
-                LMPdata.Reverse();
-
-
-                return LMPdata;
-
-            }
-        }
     }
 }

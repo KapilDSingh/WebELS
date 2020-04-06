@@ -1,24 +1,20 @@
-export class LMP {
-
-  public Type: string;
-
-  public fiveMinuteAvgLMP: number;
-
-  public hourlyIntegratedLMP: number;
-
-  public node_id: string;
+export class lmpTblRow {
 
   public timestamp: Date;
+   public fiveMinuteAvgLMP: number;
+   
+  //  constructor(timestamp: Date, fiveMinuteAvgLMP: number) {
+  //   timestamp = timestamp;
+  //   fiveMinuteAvgLMP = fiveMinuteAvgLMP;
+  // }
 }
 export class loadTblRow {
-
-  public instantaneous_Load: number;
   public timestamp: Date;
-
+  public instantaneous_Load: number;
 
   constructor(instantaneous_Load: number, timestamp: Date) {
-    instantaneous_Load = instantaneous_Load;
     timestamp = timestamp;
+    instantaneous_Load = instantaneous_Load;
   }
 }
 

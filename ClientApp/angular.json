@@ -21,9 +21,15 @@
               "src/assets",
               "src/manifest.json"
             ],
+
             "styles": [
-              "src/css/style.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+                "node_modules/bootstrap/scss/bootstrap.scss",
+                "node_modules/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css",
+                "node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-regular.css",
+                "node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-brands.css",
+                "node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-solid.css"              
             ],
             "scripts": [
               "src/assets/js/loader.js"
@@ -74,11 +80,7 @@
             "karmaConfig": "./karma.conf.js",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [],
-            "styles": [
-              "src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
-            ],
+           
             "assets": [
               "src/assets",
               "src/manifest.json"

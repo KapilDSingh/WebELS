@@ -30,22 +30,7 @@ namespace WebELS.Repository
         public LoadRepository(Func<ISODBContext> context)
         {
             _contextFactory = context;
-
-
         }
-        public List<loadTbl> GetLoad(int n)
-        {
-            using (var context = _contextFactory.Invoke())
-            {
-                LoadData = (from x in context.loadTbl where x.Area == "PJM RTO"  orderby x.timestamp descending select x).Take(n).ToList();
-                LoadData.Reverse();
-
-
-                return LoadData;
-
-            }
-        }
-        
     }
 
     public class FuelTypeRepository : IFuelTypeRepository

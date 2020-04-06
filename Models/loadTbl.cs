@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,9 +17,12 @@ namespace WebELS.Models
     }
     public partial class loadTblRow
     {
-        [Column("Instantaneous Load")]
-        public long Instantaneous_Load { get; set; }
+        [JsonProperty("timestamp")]
         [Column("timestamp", TypeName = "datetime")]
         public DateTime timestamp { get; set; }
+
+        [JsonProperty("instantaneous_Load")]
+        [Column("Instantaneous Load")]
+        public long Instantaneous_Load { get; set; }
     }
 }

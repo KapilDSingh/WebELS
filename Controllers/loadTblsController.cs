@@ -15,8 +15,6 @@ namespace WebELS.Controllers
     {
         private readonly Func<ISODBContext> _context;
 
-        public List<loadTblRow> LoadData { get; private set; }
-
         public loadTblsController(Func<ISODBContext> context)
         {
             _context = context;
@@ -26,6 +24,7 @@ namespace WebELS.Controllers
         [HttpGet]
         public IEnumerable<loadTblRow> GetloadTbl()
         {
+            List<loadTblRow> LoadData;
             using (var context = _context.Invoke())
             {
                 LoadData = (from x in context.loadTbl where x.Area == "PJM RTO" orderby x.timestamp ascending select new loadTblRow { timestamp = x.timestamp, Instantaneous_Load = x.Instantaneous_Load }).Take(100000).ToList();
