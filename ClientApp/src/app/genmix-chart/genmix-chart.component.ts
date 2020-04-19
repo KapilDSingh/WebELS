@@ -30,7 +30,7 @@ export class GenmixChartComponent implements OnInit, OnChanges  {
     options?: {}
   };
 
-  @ViewChild('chart', { static: false })   chart: GoogleChartComponent;
+  @ViewChild('chart')   chart: GoogleChartComponent;
 
   public drawGenmixChart() {
     this.GenmixChart = {
