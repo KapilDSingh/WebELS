@@ -137,22 +137,22 @@ namespace WebELS.SqlTableDependencies
             if (e.ChangeType != ChangeType.None)
             {
                 List<fuelTypeData> data = new List<fuelTypeData>();
-                data = _FuelTypeRepository.GetFuelType(48);
+                data = _FuelTypeRepository.GetFuelType(1);
 
-
-                _hubContext.Clients.All.SendAsync("ReceiveGenmix", data);
-
+                _hubContext.Clients.All.SendAsync("ReceiveGenmix", data[0]);
             }
         }
         private void MeterChanged(object sender, RecordChangedEventArgs<MeterTbl> e)
         {
             if (e.ChangeType != ChangeType.None)
             {
-                List<MeterTbl> data = new List<MeterTbl>();
+               MeterTbl meterData = new MeterTbl();
 
-                data.Add(e.Entity);
+                meterData.MeterId = e.Entity.MeterId;
+                meterData.timestamp = e.Entity.timestamp;
+                meterData.RMS_Watts_Tot = e.Entity.RMS_Watts_Tot;
 
-                _hubContext.Clients.All.SendAsync("ReceiveMeterData", data);
+                _hubContext.Clients.All.SendAsync("ReceiveMeterKWData", meterData);
 
             }
         }

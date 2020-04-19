@@ -65,7 +65,7 @@ export class SignalrISOdataService implements OnInit  {
       this.GenmixmessageReceived.emit(data);
     });
 
-    this._hubConnection.on('ReceiveMeterData', (data: any) => {
+    this._hubConnection.on('ReceiveMeterKWData', (data: any) => {
       this.MeterDataMessageReceived.emit(data);
     });
   }

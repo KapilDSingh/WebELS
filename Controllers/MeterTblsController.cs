@@ -24,7 +24,12 @@ namespace WebELS.Controllers
         [HttpGet]
         public IEnumerable<MeterTbl> GetMeterTbl()
         {
-            return _context().MeterTbl;
+            List<MeterTbl> MeterData;
+            using (var context = _context.Invoke())
+            {
+                MeterData = (from x in context.MeterTbl orderby x.timestamp ascending select new MeterTbl { timestamp = x.timestamp, MeterId = x.MeterId, RMS_Watts_Tot = x.RMS_Watts_Tot }).Take(100000).ToList();
+                return MeterData;
+            }
         }
 
         // GET: api/MeterTbls/5

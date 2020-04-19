@@ -37,7 +37,7 @@ namespace WebELS.Models
         {
             modelBuilder.Entity<GenFuelTbl>(entity =>
             {
-                entity.HasKey(e => new { e.Timestamp, e.FuelType });
+                entity.HasKey(e => new { e.timestamp, e.FuelType });
 
                 entity.Property(e => e.FuelType).IsUnicode(false);
 
@@ -46,11 +46,10 @@ namespace WebELS.Models
             modelBuilder.Entity<fuelTypeData>(entity =>
             {
 
-                entity.HasKey(e => new { e.Timestamp });
+                entity.HasKey(e => new { e.timestamp });
 
                 entity.Property(e => e.Gas).IsUnicode(false);
          
-
                 entity.Property(e => e.Coal).IsUnicode(false);
                 entity.Property(e => e.Hydro).IsUnicode(false);
                 entity.Property(e => e.Wind).IsUnicode(false);
@@ -91,7 +90,7 @@ namespace WebELS.Models
             });
             modelBuilder.Entity<MeterTbl>(entity =>
             {
-                entity.HasKey(e => new { e.MeterId, e.Timestamp });
+                entity.HasKey(e => new { e.MeterId, e.timestamp });
 
                 entity.ToTable("meterTbl");
 
@@ -100,19 +99,19 @@ namespace WebELS.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Timestamp)
+                entity.Property(e => e.timestamp)
                     .HasColumnName("timestamp")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.KWhTot).HasColumnName("kWh_Tot");
+                entity.Property(e => e.RMS_Watts_Tot).HasColumnName("RMS_Watts_Tot");
 
-                entity.Property(e => e.PowerFactorLn1).HasColumnName("Power_Factor_Ln_1");
+                //entity.Property(e => e.PowerFactorLn1).HasColumnName("Power_Factor_Ln_1");
 
-                entity.Property(e => e.PowerFactorLn2).HasColumnName("Power_Factor_Ln_2");
+                //entity.Property(e => e.PowerFactorLn2).HasColumnName("Power_Factor_Ln_2");
 
-                entity.Property(e => e.PowerFactorLn3).HasColumnName("Power_Factor_Ln_3");
+                //entity.Property(e => e.PowerFactorLn3).HasColumnName("Power_Factor_Ln_3");
 
-                //entity.Property(e => e.RevKWhTot).HasColumnName("Rev_kWh_Tot");
+
 
                 //entity.Property(e => e.RmsVoltsLn1).HasColumnName("RMS_Volts_Ln_1");
 

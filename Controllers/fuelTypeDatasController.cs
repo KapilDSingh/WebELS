@@ -24,7 +24,12 @@ namespace WebELS.Controllers
         [HttpGet]
         public IEnumerable<fuelTypeData> GetfuelTypeData()
         {
-            return _context().fuelTypeData;
+            using (var context = _context.Invoke())
+            {
+                List<fuelTypeData> fuelTypeData = context.fuelTypeData.FromSql("GenFuelPivot {0}", 1000000).ToList();
+
+                return fuelTypeData;
+            }
         }
 
         // GET: api/fuelTypeDatas/5
@@ -55,7 +60,7 @@ namespace WebELS.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != fuelTypeData.Timestamp)
+            if (id != fuelTypeData.timestamp)
             {
                 return BadRequest();
             }
@@ -97,7 +102,7 @@ namespace WebELS.Controllers
             }
             catch (DbUpdateException)
             {
-                if (fuelTypeDataExists(fuelTypeData.Timestamp))
+                if (fuelTypeDataExists(fuelTypeData.timestamp))
                 {
                     return new StatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -107,7 +112,7 @@ namespace WebELS.Controllers
                 }
             }
 
-            return CreatedAtAction("GetfuelTypeData", new { id = fuelTypeData.Timestamp }, fuelTypeData);
+            return CreatedAtAction("GetfuelTypeData", new { id = fuelTypeData.timestamp }, fuelTypeData);
         }
 
         // DELETE: api/fuelTypeDatas/5
@@ -133,7 +138,7 @@ namespace WebELS.Controllers
 
         private bool fuelTypeDataExists(DateTime id)
         {
-            return _context().fuelTypeData.Any(e => e.Timestamp == id);
+            return _context().fuelTypeData.Any(e => e.timestamp == id);
         }
     }
 }

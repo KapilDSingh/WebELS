@@ -17,7 +17,5 @@ namespace WebELS.Repository
     public interface IMeterRepository
     {
         List<MeterTbl> MeterData { get; set; }
-        void SetMeterId(string MeterId);
-        List<MeterTbl> GetMeterData(int n, string MeterId);
     }
 }

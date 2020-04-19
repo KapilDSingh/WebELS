@@ -63,7 +63,6 @@ namespace WebELS.Repository
          
                 List<fuelTypeData> fuelTypeData = context.fuelTypeData.FromSql("GenFuelPivot {0}", n).ToList();
 
-                fuelTypeData.Reverse();
                 return fuelTypeData;
 
             }
@@ -110,7 +109,7 @@ namespace WebELS.Repository
         {
             using (var context = _contextFactory.Invoke())
             {
-                MeterData = (from x in context.MeterTbl where x.MeterId == MeterId orderby x.Timestamp descending select x).Take(n).ToList();
+                MeterData = (from x in context.MeterTbl where x.MeterId == MeterId orderby x.timestamp descending select x).Take(n).ToList();
                 MeterData.Reverse();
 
 

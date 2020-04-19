@@ -9,7 +9,7 @@ namespace WebELS.Models
     public partial class GenFuelTbl
     {
         [Column("timestamp", TypeName = "datetime")]
-        public DateTime Timestamp { get; set; }
+        public DateTime timestamp { get; set; }
         [Column("Fuel Type")]
         [StringLength(50)]
         public string FuelType { get; set; }
@@ -25,7 +25,7 @@ namespace WebELS.Models
     public class fuelTypeData
     {
         [Column("timestamp", TypeName = "datetime")] 
-        public DateTime Timestamp { get; set; }
+        public DateTime timestamp { get; set; }
         [Column("Gas")]
         public double Gas { get; set; }
         [Column("Nuclear")]
