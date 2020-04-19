@@ -1,0 +1,24 @@
+    
+    a,
+    a:visited,
+    a:hover {
+      color: #1976d2;
+      text-decoration: none;
+    }
+  
+    a:hover {
+      color: #125699;
+    }
+    html, body {
+      height: 100%;
+
+
+  }
+  
+  img {
+  opacity: 0.5;
+}
+
+img:hover {
+  opacity: 1.0;
+}

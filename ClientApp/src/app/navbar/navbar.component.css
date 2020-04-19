@@ -1,0 +1,9 @@
+.color-navlink{
+    color:#150c77;
+    font-weight: 700;
+    
+}
+.color-navlink:hover
+{
+    color:lightskyblue;
+}
