@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -12,7 +12,7 @@
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <UserSecretsId>36b6d889-579f-45f9-8261-7635697b91d0</UserSecretsId>
     <StartupObject></StartupObject>
-    <ApplicationIcon>ClientApp\dist\WebELS\assets\icons\ELECTRIC.ico</ApplicationIcon>
+    <ApplicationIcon>ELECTRIC.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
